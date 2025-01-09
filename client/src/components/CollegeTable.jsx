@@ -1,11 +1,26 @@
 import React from 'react';
 import { Eye } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 export function CollegeTable({ colleges = [], loading }) {
+  const navigate = useNavigate();
+
   if (loading) {
     return (
-      <div className="bg-white rounded-lg shadow-sm p-8 text-center">
-        Loading colleges...
+      <div className="bg-white rounded-lg shadow-sm p-8">
+        <div className="animate-pulse">
+          <div className="h-4 bg-gray-200 rounded w-3/4 mb-4"></div>
+          <div className="h-4 bg-gray-200 rounded w-1/2 mb-4"></div>
+          <div className="h-4 bg-gray-200 rounded w-5/6"></div>
+        </div>
+      </div>
+    );
+  }
+
+  if (colleges.length === 0) {
+    return (
+      <div className="bg-white rounded-lg shadow-sm p-8 text-center text-gray-500">
+        No colleges found
       </div>
     );
   }
@@ -43,7 +58,7 @@ export function CollegeTable({ colleges = [], loading }) {
               </td>
               <td className="p-4">
                 <button 
-                  onClick={() => alert(`Viewing ${college.name}`)}
+                  onClick={() => navigate('/')}
                   className="text-blue-600 flex items-center space-x-1 hover:text-blue-700"
                 >
                   <Eye size={16} />

@@ -3,7 +3,7 @@ import React from 'react';
 export function StatCard({ title, value, type }) {
   const colors = {
     total: 'text-blue-600',
-    pending: 'text-orange-600',
+    pending: 'text-yellow-600',
     approved: 'text-green-600',
   };
 
