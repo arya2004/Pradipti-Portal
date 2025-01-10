@@ -4,6 +4,6 @@ export const users = pgTable('users', {
   id: serial('id').primaryKey(),
   name: varchar('name', { length: 50 }),
   email: text('email'),
-  salt: varchar('salt'),
+  salt: varchar('salt', {length: 255}),
   password: varchar('password', {length: 50})
 });
