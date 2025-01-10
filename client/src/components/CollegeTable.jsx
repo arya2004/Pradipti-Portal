@@ -58,7 +58,7 @@ export function CollegeTable({ colleges = [], loading }) {
               </td>
               <td className="p-4">
                 <button 
-                  onClick={() => navigate('/')}
+                  onClick={() => {alert(`Viewing ${college.name}`)}}
                   className="text-blue-600 flex items-center space-x-1 hover:text-blue-700"
                 >
                   <Eye size={16} />
