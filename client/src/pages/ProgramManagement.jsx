@@ -12,7 +12,6 @@ export function ProgramManagement() {
     const fetchProgramData = async () => {
       try {
         setLoading(true);
-        // In a real app, you'd get the program ID from URL params or props
         const programId = 'PROG001';
         const [programData, studentsData] = await Promise.all([
           api.fetchProgram(programId),
