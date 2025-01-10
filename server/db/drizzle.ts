@@ -5,7 +5,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 const pool = new Pool({
-  connectionString: "postgres://user:password@localhost:5432/mydb",
+  connectionString: "postgres://aryarajvaidya:password@localhost:5432/mydb",
 });
 
 export const db = drizzle(pool);
