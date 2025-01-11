@@ -19,7 +19,6 @@ export function ProgramManagement() {
     const fetchProgramData = async () => {
       try {
         setLoading(true);
-        // In a real app, you'd get the program ID from URL params or props
         const programId = "PROG001";
         const [programData, studentsData] = await Promise.all([
           api.fetchProgram(programId),
@@ -95,7 +94,7 @@ export function ProgramManagement() {
   if (!program) {
     return (
       <div className="p-6 md:p-8 pt-16 md:pt-8">
-        <div className="text-center">Program not found</div>
+        <div className="text-center">No Programs yet</div>
       </div>
     );
   }

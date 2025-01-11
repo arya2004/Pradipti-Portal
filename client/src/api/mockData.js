@@ -1,5 +1,5 @@
 export const mockColleges = [
-  { name: 'Vishwakarma University', id: 'CL-0178', state: 'MH', city: 'Pune', status: 'Approved' },
+  { name: 'Vishwakarma Institute of Technology', id: 'CL-0178', state: 'MH', city: 'Pune', status: 'Approved' },
   { name: 'MIT - ADT', id: 'CL-0179', state: 'MH', city: 'Pune', status: 'Pending' },
   { name: 'Fergusson College', id: 'CL-0180', state: 'MH', city: 'Pune', status: 'Approved' },
   { name: 'COEP', id: 'CL-0181', state: 'MH', city: 'Pune', status: 'Pending' },
