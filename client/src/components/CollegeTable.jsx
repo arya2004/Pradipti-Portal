@@ -50,7 +50,7 @@ export function CollegeTable({ colleges = [], loading }) {
                   className={`px-2 py-1 rounded-full text-xs ${
                     college.status === 'Approved'
                       ? 'bg-green-100 text-green-600'
-                      : 'bg-yellow-100 text-yellow-600'
+                      : 'bg-blue-100 text-blue-600'
                   }`}
                 >
                   {college.status}
@@ -58,7 +58,7 @@ export function CollegeTable({ colleges = [], loading }) {
               </td>
               <td className="p-4">
                 <button 
-                  onClick={() => {alert(`Viewing ${college.name}`)}}
+                  onClick={() => alert(`Viewing details for ${college.name}`)}
                   className="text-blue-600 flex items-center space-x-1 hover:text-blue-700"
                 >
                   <Eye size={16} />
