@@ -38,7 +38,7 @@ export function Dashboard() {
 
   if (error) {
     return (
-      <div className="p-8">
+      <div className="p-6 md:p-8">
         <div className="bg-red-50 text-red-600 p-4 rounded-lg">
           {error}
         </div>
@@ -47,7 +47,7 @@ export function Dashboard() {
   }
 
   return (
-    <div className="p-8">
+    <div className="p-6 md:p-8 pt-16 md:pt-8">
       <div className="flex justify-between items-center mb-8">
         <h2 className="text-2xl font-semibold">Overview</h2>
         <div className="text-blue-600">
