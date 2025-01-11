@@ -1,4 +1,4 @@
-```markdown
+```
 # React + Vite + Tailwind CSS Frontend Project
 
 This project is a frontend application built using **React**, **Vite**, and **Tailwind CSS**. It serves as a boilerplate for fast and efficient frontend development.
@@ -11,7 +11,6 @@ This project is a frontend application built using **React**, **Vite**, and **Ta
 - 🛠️ **Scalable Setup**: Pre-configured with essential tools and structure for efficient development.
 - 🚀 **Responsive Design**: Mobile-first and responsive out-of-the-box.
 
----
 ---
 
 ## 🚀 Getting Started
