@@ -30,9 +30,9 @@ export function Sidebar({ onClose }) {
           Program Management
         </SidebarLink>
         <SidebarLink 
-          href="/$" 
+          href="/college-management" 
           icon={<Building2 size={20} />}
-          active={isActive('/#')}
+          active={isActive('/college-management')}
           onClick={onClose}
         >
           College Management

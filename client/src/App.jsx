@@ -5,6 +5,7 @@ import { Sidebar } from "./components/Sidebar";
 import { Dashboard } from "./pages/Dashboard";
 import { ProgramManagement } from "./pages/ProgramManagement";
 import { ProgramManagementDashboard } from "./pages/ProgramManagementDashboard";
+import { CollegeManagement } from "./pages/CollegeManagement";
 
 export default function App() {
   const [showMobileSidebar, setShowMobileSidebar] = useState(false);
@@ -48,6 +49,7 @@ export default function App() {
               <Route path="/" element={<Dashboard />} />
               <Route path="/program-management-dashboard" element={<ProgramManagementDashboard />} />
               <Route path="/program/:programId" element={<ProgramManagement />} />
+              <Route path="/college-management" element={<CollegeManagement />} />
               <Route path="*" element={<div>404: Page Not Found</div>} />
             </Routes>
           </div>
