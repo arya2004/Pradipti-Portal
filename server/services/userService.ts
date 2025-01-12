@@ -5,7 +5,10 @@ export const fetchUsers = async () => {
   return db.select({
     id: users.id,
     name: users.name,
-    email: users.email
+    email: users.email,
+    salt: users.salt,
+    password: users.password,
+    sessiontoken: users.sessiontoken
   }).from(users);
 };
 
