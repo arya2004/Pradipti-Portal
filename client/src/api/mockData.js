@@ -6,6 +6,14 @@ export const mockColleges = [
   { name: 'Symbiosis Institute', id: 'CL-0182', state: 'MH', city: 'Pune', status: 'Approved' },
 ];
 
+export const Program = {
+  fetchPrograms: async () => [
+    { name: "Program 1", id: "APP-2025-001", applications: 2, slotsRemaining: "3/10" },
+    { name: "Program 2", id: "APP-2025-002", applications: 2, slotsRemaining: "7/10" },
+    { name: "Program 3", id: "APP-2025-003", applications: 2, slotsRemaining: "1/10" },
+  ],
+};
+
 const mockProgram = {
   title: 'Air Traffic Management Intern',
   courseCode: 'PP12345',

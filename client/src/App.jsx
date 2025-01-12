@@ -4,6 +4,7 @@ import { Menu, X } from 'lucide-react';
 import { Sidebar } from './components/Sidebar';
 import { Dashboard } from './pages/Dashboard';
 import { ProgramManagement } from './pages/ProgramManagement';
+import { ProgramManagementDashboard } from './pages/ProgramManagementDashboard';
 
 export default function App() {
   const [showMobileSidebar, setShowMobileSidebar] = useState(false);
@@ -46,6 +47,7 @@ export default function App() {
             <Routes>
               <Route path="/" element={<Dashboard />} />
               <Route path="/program-management" element={<ProgramManagement />} />
+              <Route path="/program-management-dashboard" element={<ProgramManagementDashboard />} />
             </Routes>
           </div>
         </main>
