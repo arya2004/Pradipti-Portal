@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { Search, Filter } from "lucide-react";
 import { Program } from "../api/mockData";
+import { useNavigate } from "react-router-dom";
 
 export function ProgramManagementDashboard() {
   const [searchTerm, setSearchTerm] = useState("");
   const [programs, setPrograms] = useState([]);
   const [filteredPrograms, setFilteredPrograms] = useState([]);
   const [showFilters, setShowFilters] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchPrograms = async () => {
@@ -29,6 +31,10 @@ export function ProgramManagementDashboard() {
       program.id.toLowerCase().includes(term.toLowerCase())
     );
     setFilteredPrograms(filtered);
+  };
+
+  const handleView = (programId) => {
+    navigate(`/program/${programId}`);
   };
 
   return (
@@ -80,7 +86,7 @@ export function ProgramManagementDashboard() {
                     <div className="flex gap-2">
                       <button
                         className="px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-600"
-                        onClick={() => console.log(`Viewing ${program.id}`)}
+                        onClick={() => handleView(program.id)}
                       >
                         View
                       </button>
@@ -105,6 +111,3 @@ export function ProgramManagementDashboard() {
     </div>
   );
 }
-
-
- 
