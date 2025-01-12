@@ -1,6 +1,6 @@
-import React from 'react';
-import { Eye } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import React from "react";
+import { Eye } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 export function CollegeTable({ colleges = [], loading }) {
   const navigate = useNavigate();
@@ -48,17 +48,17 @@ export function CollegeTable({ colleges = [], loading }) {
               <td className="p-4">
                 <span
                   className={`px-2 py-1 rounded-full text-xs ${
-                    college.status === 'Approved'
-                      ? 'bg-green-100 text-green-600'
-                      : 'bg-yellow-100 text-yellow-600'
+                    college.status === "Approved"
+                      ? "bg-green-100 text-green-600"
+                      : "bg-yellow-100 text-yellow-600"
                   }`}
                 >
                   {college.status}
                 </span>
               </td>
               <td className="p-4">
-                <button 
-                  onClick={() => {alert(`Viewing ${college.name}`)}}
+                <button
+                  onClick={() => alert(`Viewing details for ${college.name}`)}
                   className="text-blue-600 flex items-center space-x-1 hover:text-blue-700"
                 >
                   <Eye size={16} />

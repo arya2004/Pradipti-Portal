@@ -1,4 +1,3 @@
-// Simulated API data
 export const mockColleges = [
   { name: 'Vishwakarma Institute of Technology', id: 'CL-0178', state: 'MH', city: 'Pune', status: 'Approved' },
   { name: 'MIT - ADT', id: 'CL-0179', state: 'MH', city: 'Pune', status: 'Pending' },
@@ -17,16 +16,16 @@ const mockProgram = {
 };
 
 const mockStudents = [
-  { name: 'Arya Pathak', id: 'APP0123', attended: false },
-  { name: 'Omkar Lolage', id: 'APP0123', attended: true },
-  { name: 'Prajwal Weladi', id: 'APP0123', attended: true },
-  { name: 'Arya Rajvaidya', id: 'APP0123', attended: false },
+  { name: 'Arya Pathak', id: 'APP0123', attended: false, status: 'Pending' },
+  { name: 'Omkar Lolage', id: 'APP0124', attended: true, status: 'Approved' },
+  { name: 'Prajwal Weladi', id: 'APP0125', attended: true, status: 'Approved' },
+  { name: 'Arya Rajvaidya', id: 'APP0126', attended: false, status: 'Rejected' },
 ];
 
 const mockUser = {
   name: 'Omkar Lolage',
   role: 'Admin',
-  email: 'omkar.lolage@example.com'
+  email: 'admin@example.com'
 };
 
 // Simulated API endpoints
