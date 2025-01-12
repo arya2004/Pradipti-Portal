@@ -27,15 +27,20 @@ export function Sidebar({ onClose }) {
         >
           Dashboard
         </SidebarLink>
-        <SidebarLink
-          href="/program-management"
+        <SidebarLink 
+          href="/program-management-dashboard" 
           icon={<BookOpen size={20} />}
-          active={isActive("/program-management")}
+          active={isActive('/program-management-dashboard')}
           onClick={onClose}
         >
           Program Management
         </SidebarLink>
-        <SidebarLink href="#" icon={<Building2 size={20} />} onClick={onClose}>
+        <SidebarLink 
+          href="/college-management" 
+          icon={<Building2 size={20} />}
+          active={isActive('/college-management')}
+          onClick={onClose}
+        >
           College Management
         </SidebarLink>
         <SidebarLink href="#" icon={<UserCog size={20} />} onClick={onClose}>
