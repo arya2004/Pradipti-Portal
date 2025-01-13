@@ -50,7 +50,9 @@ export function CollegeTable({ colleges = [], loading }) {
                   className={`px-2 py-1 rounded-full text-xs ${
                     college.status === "Approved"
                       ? "bg-green-100 text-green-600"
-                      : "bg-yellow-100 text-yellow-600"
+                      : college.status === "Pending"
+                      ? "bg-yellow-100 text-yellow-600"
+                      : "bg-red-100 text-red-600"
                   }`}
                 >
                   {college.status}
