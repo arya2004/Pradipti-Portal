@@ -294,7 +294,7 @@ export function ProgramManagement() {
                     <span
                       className={`px-3 py-1 rounded-full text-sm ${
                         student.attended
-                          ? "bg-green-100 text-green-600"
+                          ? "bg-bgGreen text-textGreen font-sb"
                           : "bg-red-100 text-red-600"
                       }`}
                     >
