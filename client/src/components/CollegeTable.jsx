@@ -49,9 +49,9 @@ export function CollegeTable({ colleges = [], loading }) {
                 <span
                   className={`px-2 py-1 rounded-full text-xs ${
                     college.status === "Approved"
-                      ? "bg-green-100 text-green-600"
+                      ? "bg-myGreen text-white"
                       : college.status === "Pending"
-                      ? "bg-yellow-100 text-yellow-600"
+                      ? "bg-myYellow text-white"
                       : "bg-red-100 text-red-600"
                   }`}
                 >
