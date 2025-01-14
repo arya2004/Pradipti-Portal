@@ -1,16 +1,18 @@
-import React from 'react';
+import React from "react";
 
 export function StatCard({ title, value, type }) {
-  const colors = {
-    total: 'text-blue-600',
-    pending: 'text-orange-600',
-    approved: 'text-green-600',
+  const colorsTitles = {
+    "Total Applications": "text-myBlue", // Use correct title and desired color
+    "Pending Applications": "text-myRed",
+    "Approved Applications": "text-green-600",
   };
 
   return (
     <div className="bg-white p-6 rounded-lg shadow-sm">
-      <h3 className="text-sm text-gray-600 mb-2">{title}</h3>
-      <p className={`text-2xl font-bold ${colors[type]}`}>{value}</p>
+      <h3 className={`text-sm ${colorsTitles[title]} font-semibold`}>
+        {title}
+      </h3>
+      <p className={`text-2xl font-bold`}>{value}</p>
     </div>
   );
 }
