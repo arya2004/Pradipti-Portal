@@ -5,6 +5,12 @@ export default {
     extend: {
       colors: {
         tp : '#404040',
+        myBlue: '#465FF1',
+        myRed: '#E42600',
+        myGreen: '#3FCA5B',
+        myYellow: '#FFC70E',
+        textGreen: '#00891B',
+        bgGreen: 'rgba(63, 202, 91, 0.26)',
       }
     },
   },
