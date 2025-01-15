@@ -292,10 +292,10 @@ export function ProgramManagement() {
                   <td className="py-4">{student.id}</td>
                   <td className="py-4">
                     <span
-                      className={`px-3 py-1 rounded-full text-sm ${
+                      className={`rounded-full text-sm ${
                         student.attended
-                          ? "bg-bgGreen text-textGreen font-sb"
-                          : "bg-red-100 text-red-600"
+                          ? "px-7 py-1 bg-bgGreen text-textGreen font-semibold"
+                          : "px-4 py-1 bg-bgRed text-myRed font-semibold"
                       }`}
                     >
                       {student.attended ? "Attended" : "Not Attended"}
@@ -303,12 +303,12 @@ export function ProgramManagement() {
                   </td>
                   <td className="py-4">
                     <span
-                      className={`px-3 py-1 rounded-full text-sm ${
+                      className={`rounded-full text-sm ${
                         student.status === "Approved"
-                          ? "bg-green-100 text-green-600"
+                          ? "px-3 py-1 bg-myGreen text-white"
                           : student.status === "Pending"
-                          ? "bg-yellow-100 text-yellow-600"
-                          : "bg-red-100 text-red-600"
+                          ? "px-4 py-1 bg-myYellow text-white"
+                          : "px-4 py-1 bg-myRed text-white"
                       }`}
                     >
                       {student.status === "Approved"
@@ -319,9 +319,9 @@ export function ProgramManagement() {
                     </span>
                   </td>
                   <td className="py-4">
-                    <div className="flex flex-wrap gap-2">
+                    <div className="flex flex-wrap gap-5">
                       <button
-                        className="px-3 py-1 bg-green-500 text-white rounded hover:bg-green-600"
+                        className="px-3 py-1 bg-myGreen text-white rounded hover:bg-green-600"
                         onClick={() =>
                           handleStudentAction(student.id, "Approved")
                         }
@@ -329,7 +329,7 @@ export function ProgramManagement() {
                         Approve
                       </button>
                       <button
-                        className="px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600"
+                        className="px-4 py-1 bg-myRed text-white rounded hover:bg-red-600"
                         onClick={() =>
                           handleStudentAction(student.id, "Rejected")
                         }
@@ -337,7 +337,7 @@ export function ProgramManagement() {
                         Deny
                       </button>
                       <button
-                        className="px-3 py-1 bg-yellow-500 text-white rounded hover:bg-yellow-600"
+                        className="px-3 py-1 bg-myYellow text-white rounded hover:bg-yellow-600"
                         onClick={() =>
                           handleStudentAction(student.id, "Pending")
                         }
