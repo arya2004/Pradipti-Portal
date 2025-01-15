@@ -11,6 +11,7 @@ export default {
         myYellow: '#FFC70E',
         textGreen: '#00891B',
         bgGreen: 'rgba(63, 202, 91, 0.26)',
+        bgRed: 'rgba(228, 38, 0, 0.15)',
       }
     },
   },
