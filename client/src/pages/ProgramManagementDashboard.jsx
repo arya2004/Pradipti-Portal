@@ -30,9 +30,10 @@ export function ProgramManagementDashboard() {
 
   const handleSearch = (term) => {
     setSearchTerm(term);
-    const filtered = programs.filter((program) =>
-      program.name.toLowerCase().includes(term.toLowerCase()) ||
-      program.id.toLowerCase().includes(term.toLowerCase())
+    const filtered = programs.filter(
+      (program) =>
+        program.name.toLowerCase().includes(term.toLowerCase()) ||
+        program.id.toLowerCase().includes(term.toLowerCase())
     );
     setFilteredPrograms(filtered);
     setCurrentPage(1); // Reset to first page on search
@@ -73,7 +74,10 @@ export function ProgramManagementDashboard() {
   // Pagination Logic
   const indexOfLastProgram = currentPage * itemsPerPage;
   const indexOfFirstProgram = indexOfLastProgram - itemsPerPage;
-  const currentPrograms = filteredPrograms.slice(indexOfFirstProgram, indexOfLastProgram);
+  const currentPrograms = filteredPrograms.slice(
+    indexOfFirstProgram,
+    indexOfLastProgram
+  );
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
@@ -108,11 +112,11 @@ export function ProgramManagementDashboard() {
           <table className="w-full">
             <thead>
               <tr className="text-left border-b">
-                <th className="py-2">Program Name</th> 
-                <th className="py-2">Program ID</th> 
-                <th className="py-2 text-center">No. of Applications</th> 
-                <th className="py-2 text-center">No. of Slots Remaining</th> 
-                <th className="py-2">Actions</th> 
+                <th className="py-2">Program Name</th>
+                <th className="py-2">Program ID</th>
+                <th className="py-2 text-center">No. of Applications</th>
+                <th className="py-2 text-center">No. of Slots Remaining</th>
+                <th className="py-2">Actions</th>
               </tr>
             </thead>
             <tbody>
@@ -120,7 +124,7 @@ export function ProgramManagementDashboard() {
                 <tr key={program.id} className="border-b">
                   {editingProgramId === program.id ? (
                     <>
-                      <td className="py-2"> 
+                      <td className="py-2">
                         <input
                           type="text"
                           value={editedProgram.name}
@@ -130,7 +134,7 @@ export function ProgramManagementDashboard() {
                           className="border rounded px-2 py-1 w-full"
                         />
                       </td>
-                      <td className="py-2"> 
+                      <td className="py-2">
                         <input
                           type="text"
                           value={editedProgram.id}
@@ -140,7 +144,7 @@ export function ProgramManagementDashboard() {
                           className="border rounded px-2 py-1 w-full"
                         />
                       </td>
-                      <td className="py-2"> 
+                      <td className="py-2">
                         <input
                           type="number"
                           value={editedProgram.applications}
@@ -150,7 +154,7 @@ export function ProgramManagementDashboard() {
                           className="border rounded px-2 py-1 w-full"
                         />
                       </td>
-                      <td className="py-2"> 
+                      <td className="py-2">
                         <input
                           type="text"
                           value={editedProgram.slotsRemaining}
@@ -160,7 +164,7 @@ export function ProgramManagementDashboard() {
                           className="border rounded px-2 py-1 w-full"
                         />
                       </td>
-                      <td className="py-2"> 
+                      <td className="py-2">
                         <div className="flex gap-2">
                           <button
                             className="px-3 py-1 bg-green-500 text-white rounded hover:bg-green-600"
@@ -179,20 +183,24 @@ export function ProgramManagementDashboard() {
                     </>
                   ) : (
                     <>
-                      <td className="py-2">{program.name}</td> 
-                      <td className="py-2">{program.id}</td> 
-                      <td className="py-2 text-center">{program.applications}</td> 
-                      <td className="py-2 text-center">{program.slotsRemaining}</td> 
+                      <td className="py-2">{program.name}</td>
+                      <td className="py-2">{program.id}</td>
+                      <td className="py-2 text-center">
+                        {program.applications}
+                      </td>
+                      <td className="py-2 text-center">
+                        {program.slotsRemaining}
+                      </td>
                       <td className="py-2">
                         <div className="flex gap-2">
                           <button
-                            className="px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-600"
+                            className="px-3 py-1 bg-myBlue text-white rounded hover:bg-blue-600"
                             onClick={() => handleView(program.id)}
                           >
                             View
                           </button>
                           <button
-                            className="px-3 py-1 bg-green-500 text-white rounded hover:bg-green-600"
+                            className="px-3 py-1 bg-myGreen text-white rounded hover:bg-green-600"
                             onClick={() => handleEdit(program)}
                           >
                             Update
@@ -211,7 +219,9 @@ export function ProgramManagementDashboard() {
       {/* Pagination Controls outside of table box */}
       <div className="mt-6 flex justify-between items-center">
         <div>
-          Showing {currentPage * itemsPerPage - (itemsPerPage - 1)} to {Math.min(currentPage * itemsPerPage, filteredPrograms.length)} of {filteredPrograms.length} results
+          Showing {currentPage * itemsPerPage - (itemsPerPage - 1)} to{" "}
+          {Math.min(currentPage * itemsPerPage, filteredPrograms.length)} of{" "}
+          {filteredPrograms.length} results
         </div>
         <div className="flex gap-2">
           <button
@@ -223,7 +233,9 @@ export function ProgramManagementDashboard() {
           </button>
           <button
             onClick={() => paginate(currentPage + 1)}
-            disabled={currentPage === Math.ceil(filteredPrograms.length / itemsPerPage)}
+            disabled={
+              currentPage === Math.ceil(filteredPrograms.length / itemsPerPage)
+            }
             className="px-3 py-1 border rounded-md disabled:opacity-50"
           >
             Next
