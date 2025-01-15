@@ -86,24 +86,24 @@ export function CollegeManagement() {
 
       <div className="flex flex-col gap-4 mb-8">
         <div className="flex gap-4">
-            <div className="flex-1 relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-                <input
-                type="text"
-                placeholder="Search colleges..."
-                className="w-full pl-10 pr-4 py-2 border rounded-lg shadow-sm"
-                value={searchTerm}
-                onChange={(e) => handleSearch(e.target.value)}
-                />
-            </div>
-            <button
-                className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg"
-                onClick={() => setShowFilters(!showFilters)}
-            >
-                <Filter className="w-4 h-4" />
-                Apply Filters
-            </button>
-            </div>
+          <div className="flex-1 relative">
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+            <input
+              type="text"
+              placeholder="Search colleges..."
+              className="w-full pl-10 pr-4 py-2 border rounded-lg shadow-sm"
+              value={searchTerm}
+              onChange={(e) => handleSearch(e.target.value)}
+            />
+          </div>
+          <button
+            className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg"
+            onClick={() => setShowFilters(!showFilters)}
+          >
+            <Filter className="w-4 h-4" />
+            Apply Filters
+          </button>
+        </div>
 
         {showFilters && (
           <div className="bg-white p-4 rounded-lg shadow-sm">
@@ -137,26 +137,26 @@ export function CollegeManagement() {
         <table className="w-full">
           <thead>
             <tr className="text-left">
-              <th className="py-2 px-6 font-medium">College Name</th> 
-              <th className="py-2 px-6 font-medium">College ID</th> 
-              <th className="py-2 px-6 font-medium">Status</th> 
-              <th className="py-2 px-6 font-medium">Programs Assigned</th> 
-              <th className="py-2 px-6 font-medium">Actions</th> 
+              <th className="py-2 px-6 font-medium">College Name</th>
+              <th className="py-2 px-6 font-medium">College ID</th>
+              <th className="py-2 px-6 font-medium">Status</th>
+              <th className="py-2 px-6 font-medium">Programs Assigned</th>
+              <th className="py-2 px-6 font-medium">Actions</th>
             </tr>
           </thead>
           <tbody>
             {currentPageData.map((college) => (
               <tr key={college.id} className="border-t">
-                <td className="py-2 px-6">{college.name}</td> 
-                <td className="py-2 px-6">{college.id}</td> 
+                <td className="py-2 px-6">{college.name}</td>
+                <td className="py-2 px-6">{college.id}</td>
                 <td className="py-2 px-6">
                   <span
-                    className={`px-3 py-1 rounded-full ${
+                    className={`rounded-full ${
                       college.status === "Approved"
-                        ? "bg-green-500 text-white"
+                        ? "px-3 py-1 bg-myGreen text-white"
                         : college.status === "Rejected"
-                        ? "bg-red-500 text-white"
-                        : "bg-gray-300 text-gray-700"
+                        ? "px-4 py-1 bg-myRed text-white"
+                        : "px-4 py-1 bg-myYellow text-white"
                     }`}
                   >
                     {college.status}
@@ -167,13 +167,13 @@ export function CollegeManagement() {
                 </td>
                 <td className="py-2 px-6">
                   <button
-                    className="px-3 py-1 bg-green-500 text-white rounded-full text-sm mr-2"
+                    className="px-3 py-1 bg-myGreen text-white rounded-full text-sm mr-2"
                     onClick={() => handleStatusChange(college.id, "Approved")}
                   >
                     Approve
                   </button>
                   <button
-                    className="px-3 py-1 bg-red-500 text-white rounded-full text-sm"
+                    className="px-4 py-1 bg-myRed text-white rounded-full text-sm"
                     onClick={() => handleStatusChange(college.id, "Rejected")}
                   >
                     Deny
@@ -187,7 +187,8 @@ export function CollegeManagement() {
 
       <div className="mt-6 flex justify-between items-center">
         <div>
-          Showing {startIndex + 1} to {endIndex} of {filteredColleges.length} results
+          Showing {startIndex + 1} to {endIndex} of {filteredColleges.length}{" "}
+          results
         </div>
         <div className="flex gap-2">
           <button
@@ -199,7 +200,9 @@ export function CollegeManagement() {
           </button>
           <button
             onClick={() => handlePageChange(currentPage + 1)}
-            disabled={currentPage === Math.ceil(filteredColleges.length / itemsPerPage)}
+            disabled={
+              currentPage === Math.ceil(filteredColleges.length / itemsPerPage)
+            }
             className="px-3 py-1 border rounded-md disabled:opacity-50"
           >
             Next
