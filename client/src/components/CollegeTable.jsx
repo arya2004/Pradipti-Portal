@@ -52,7 +52,7 @@ export function CollegeTable({ colleges = [], loading }) {
                       ? "bg-myGreen text-white"
                       : college.status === "Pending"
                       ? "bg-myYellow text-white"
-                      : "bg-red-100 text-red-600"
+                      : "bg-myRed text-white"
                   }`}
                 >
                   {college.status}
