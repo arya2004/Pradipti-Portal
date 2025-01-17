@@ -155,6 +155,7 @@ const Footer = () => {
         <div className="flex flex-col md:flex-row justify-center">
           {/* Policies */}
           <div className="mt-4 md:mt-0 flex space-x-4 text-sm">
+            <p>Copyright © 2025 - AAI- Pradipti All Rights Reserved</p>
             <a href="#" className="text-black hover:text-gray-800">
               Privacy Policy
             </a>
