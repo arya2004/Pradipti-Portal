@@ -184,7 +184,6 @@ export function CollegeManagement() {
           </tbody>
         </table>
       </div>
-
       <div className="mt-6 flex justify-between items-center">
         <div>
           Showing {startIndex + 1} to {endIndex} of {filteredColleges.length}{" "}
