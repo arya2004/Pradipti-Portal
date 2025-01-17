@@ -14,7 +14,7 @@ export function Sidebar({ onClose }) {
   const isActive = (path) => location.pathname === path;
 
   return (
-    <div className="bg-white w-64 min-h-screen shadow-lg">
+    <>
       <div className="p-4 border-b">
         <img src="/image.png"></img>
       </div>
@@ -27,18 +27,18 @@ export function Sidebar({ onClose }) {
         >
           Dashboard
         </SidebarLink>
-        <SidebarLink 
-          href="/program-management-dashboard" 
+        <SidebarLink
+          href="/program-management-dashboard"
           icon={<BookOpen size={20} />}
-          active={isActive('/program-management-dashboard')}
+          active={isActive("/program-management-dashboard")}
           onClick={onClose}
         >
           Program Management
         </SidebarLink>
-        <SidebarLink 
-          href="/college-management" 
+        <SidebarLink
+          href="/college-management"
           icon={<Building2 size={20} />}
-          active={isActive('/college-management')}
+          active={isActive("/college-management")}
           onClick={onClose}
         >
           College Management
@@ -50,7 +50,7 @@ export function Sidebar({ onClose }) {
           Notifications
         </SidebarLink>
       </nav>
-    </div>
+    </>
   );
 }
 
