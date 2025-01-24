@@ -86,7 +86,9 @@ export function ProgramManagement() {
   if (loading) {
     return (
       <div className="p-6 md:p-8 pt-16 md:pt-8">
-        <div className="text-center">Loading program data...</div>
+        <div className="font-montserrat text-center">
+          Loading program data...
+        </div>
       </div>
     );
   }
@@ -94,13 +96,13 @@ export function ProgramManagement() {
   if (!program) {
     return (
       <div className="p-6 md:p-8 pt-16 md:pt-8">
-        <div className="text-center">No Programs yet</div>
+        <div className="font-montserrat text-center">No Programs yet</div>
       </div>
     );
   }
 
   return (
-    <div className="p-6 md:p-8 pt-16 md:pt-8">
+    <div className="font-montserrat p-6 md:p-8 pt-16 md:pt-8">
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-2xl font-semibold">Program Details</h1>
         <div className="flex items-center gap-4">

@@ -9,10 +9,12 @@ export function StatCard({ title, value, type }) {
 
   return (
     <div className="bg-white p-6 rounded-lg shadow-sm">
-      <h3 className={`text-sm ${colorsTitles[title]} font-semibold`}>
+      <h3
+        className={`font-montserrat text-sm ${colorsTitles[title]} font-semibold`}
+      >
         {title}
       </h3>
-      <p className={`text-2xl font-bold`}>{value}</p>
+      <p className={`font-montserrat text-2xl font-bold`}>{value}</p>
     </div>
   );
 }

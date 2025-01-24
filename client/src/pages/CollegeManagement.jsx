@@ -70,7 +70,7 @@ export function CollegeManagement() {
   };
 
   const getProgramBadge = (program) => (
-    <span key={program} className="text-blue-600 ml-2">
+    <span key={program} className="font-montserrat text-blue-600 ml-2">
       {program}
     </span>
   );
@@ -82,25 +82,27 @@ export function CollegeManagement() {
 
   return (
     <div className="p-6 bg-gray-50">
-      <h1 className="text-2xl font-semibold mb-6">College Management</h1>
+      <h1 className="font-montserrat text-2xl font-semibold mb-6">
+        College Management
+      </h1>
 
       <div className="flex flex-col gap-4 mb-8">
         <div className="flex gap-4">
           <div className="flex-1 relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+            <Search className="font-montserrat absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
             <input
               type="text"
               placeholder="Search colleges..."
-              className="w-full pl-10 pr-4 py-2 border rounded-lg shadow-sm"
+              className="font-montserrat w-full pl-10 pr-4 py-2 border rounded-lg shadow-sm"
               value={searchTerm}
               onChange={(e) => handleSearch(e.target.value)}
             />
           </div>
           <button
-            className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg"
+            className="font-montserrat flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg"
             onClick={() => setShowFilters(!showFilters)}
           >
-            <Filter className="w-4 h-4" />
+            <Filter className="font-montserrat w-4 h-4" />
             Apply Filters
           </button>
         </div>
@@ -108,17 +110,22 @@ export function CollegeManagement() {
         {showFilters && (
           <div className="bg-white p-4 rounded-lg shadow-sm">
             <div className="flex justify-between items-center mb-4">
-              <h3 className="font-medium">Filter by Programs</h3>
+              <h3 className="font-montserrat font-medium">
+                Filter by Programs
+              </h3>
               <button
                 onClick={clearFilters}
-                className="text-sm text-gray-500 flex items-center gap-1"
+                className="font-montserrat text-sm text-gray-500 flex items-center gap-1"
               >
                 Clear Filters
               </button>
             </div>
             <div className="flex gap-4">
               {availablePrograms.map((program) => (
-                <label key={program} className="flex items-center gap-2">
+                <label
+                  key={program}
+                  className="font-montserrat flex items-center gap-2"
+                >
                   <input
                     type="checkbox"
                     checked={selectedPrograms.includes(program)}
@@ -136,7 +143,7 @@ export function CollegeManagement() {
       <div className="bg-white rounded-lg shadow-sm">
         <table className="w-full">
           <thead>
-            <tr className="text-left">
+            <tr className="font-montserrat text-left">
               <th className="py-2 px-6 font-medium">College Name</th>
               <th className="py-2 px-6 font-medium">College ID</th>
               <th className="py-2 px-6 font-medium">Status</th>
@@ -147,11 +154,11 @@ export function CollegeManagement() {
           <tbody>
             {currentPageData.map((college) => (
               <tr key={college.id} className="border-t">
-                <td className="py-2 px-6">{college.name}</td>
-                <td className="py-2 px-6">{college.id}</td>
-                <td className="py-2 px-6">
+                <td className="font-montserrat py-2 px-6">{college.name}</td>
+                <td className="font-montserrat py-2 px-6">{college.id}</td>
+                <td className="font-montserrat py-2 px-6">
                   <span
-                    className={`rounded-full ${
+                    className={`font-montserrat rounded-full ${
                       college.status === "Approved"
                         ? "px-3 py-1 bg-myGreen text-white"
                         : college.status === "Rejected"
@@ -162,18 +169,18 @@ export function CollegeManagement() {
                     {college.status}
                   </span>
                 </td>
-                <td className="py-2 px-6">
+                <td className="font-montserrat py-2 px-6">
                   {college.programs.map(getProgramBadge)}
                 </td>
-                <td className="py-2 px-6">
+                <td className="font-montserrat py-2 px-6">
                   <button
-                    className="px-3 py-1 bg-myGreen text-white rounded-full text-sm mr-2"
+                    className="font-montserrat px-3 py-1 bg-myGreen text-white rounded-full text-sm mr-2"
                     onClick={() => handleStatusChange(college.id, "Approved")}
                   >
                     Approve
                   </button>
                   <button
-                    className="px-4 py-1 bg-myRed text-white rounded-full text-sm"
+                    className="font-montserrat px-4 py-1 bg-myRed text-white rounded-full text-sm"
                     onClick={() => handleStatusChange(college.id, "Rejected")}
                   >
                     Deny
@@ -184,16 +191,16 @@ export function CollegeManagement() {
           </tbody>
         </table>
       </div>
-      <div className="mt-6 flex justify-between items-center">
+      <div className="font-montserrat mt-6 flex justify-between items-center">
         <div>
           Showing {startIndex + 1} to {endIndex} of {filteredColleges.length}{" "}
           results
         </div>
-        <div className="flex gap-2">
+        <div className="font-montserrat flex gap-2">
           <button
             onClick={() => handlePageChange(currentPage - 1)}
             disabled={currentPage === 1}
-            className="px-3 py-1 border rounded-md disabled:opacity-50"
+            className="font-montserrat px-3 py-1 border rounded-md disabled:opacity-50"
           >
             Prev
           </button>
@@ -202,7 +209,7 @@ export function CollegeManagement() {
             disabled={
               currentPage === Math.ceil(filteredColleges.length / itemsPerPage)
             }
-            className="px-3 py-1 border rounded-md disabled:opacity-50"
+            className="font-montserrat px-3 py-1 border rounded-md disabled:opacity-50"
           >
             Next
           </button>

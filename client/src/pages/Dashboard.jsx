@@ -219,20 +219,21 @@ export function Dashboard() {
 
   return (
     <div className="flex flex-row min-h-screen">
-      {/* Main Content */}
       <div className="flex-grow p-6 md:p-8 pt-16 md:pt-8 bg-gray-50">
         <div className="flex justify-between items-center mb-8">
-          <h2 className="text-2xl text-gray-800 font-semibold">Overview</h2>
-          <div className="text-blue-600">
+          <h2 className="font-montserrat text-2xl text-gray-800 font-semibold">
+            Overview
+          </h2>
+          <div className="font-montserrat text-blue-600">
             {loading ? (
-              <div className="animate-pulse bg-gray-200 h-6 w-32 rounded"></div>
+              <div className="font-montserrat animate-pulse bg-gray-200 h-6 w-32 rounded"></div>
             ) : (
               `Welcome, ${user?.name || "Admin"}`
             )}
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        <div className="font-montserrat grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
           <StatCard
             title="Total Applications"
             value={stats.total}
@@ -249,16 +250,13 @@ export function Dashboard() {
             type="approved"
           />
         </div>
-
-        {/* Charts Section */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-          {/* Pie Chart */}
           <div className="bg-white shadow rounded-lg p-6">
             <div className="flex items-center justify-between mb-4">
-              <h3 className="text-lg font-semibold text-gray-800">
+              <h3 className="font-montserrat text-lg font-semibold text-gray-800">
                 Application Status
               </h3>
-              <select className="border rounded-md px-2 py-1 text-sm text-gray-600 hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+              <select className="font-montserrat border rounded-md px-2 py-1 text-sm text-gray-600 hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                 <option>December 2024</option>
               </select>
             </div>
@@ -269,7 +267,7 @@ export function Dashboard() {
                 className="w-full h-full"
               />
               <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center ">
-                <div className="text-4xl font-bold text-blue-600">
+                <div className="font-montserrat text-4xl font-bold text-blue-600">
                   {stats.total}
                 </div>
               </div>
@@ -279,10 +277,10 @@ export function Dashboard() {
           {/* Line Chart */}
           <div className="bg-white shadow rounded-lg p-6">
             <div className="flex items-center justify-between mb-4">
-              <h3 className="text-lg font-semibold text-gray-800">
+              <h3 className="font-montserrat text-lg font-semibold text-gray-800">
                 Decision Trends
               </h3>
-              <select className="border rounded-md px-2 py-1 text-sm text-gray-600 hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+              <select className="font-montserrat border rounded-md px-2 py-1 text-sm text-gray-600 hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                 <option>Decision Trends</option>
               </select>
             </div>
@@ -297,12 +295,12 @@ export function Dashboard() {
         </div>
 
         <div className="mb-6">
-          <h3 className="text-lg font-semibold mb-4">College Tracking</h3>
+          <h3 className="font-montserrat text-lg font-semibold mb-4">
+            College Tracking
+          </h3>
           <CollegeTable colleges={colleges} loading={loading} />
         </div>
       </div>
-
-      {/* Notifications Sidebar */}
       <div className="w-full lg:w-1/4 bg-white border-l border-gray-200 p-4">
         <div className="flex justify-between items-center mb-6">
           <div className="flex items-center gap-2">
@@ -319,16 +317,16 @@ export function Dashboard() {
                 d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"
               ></path>
             </svg>
-            <h2 className="text-lg font-semibold text-textGray">
+            <h2 className="font-montserrat text-lg font-semibold text-textGray">
               Notifications
             </h2>
           </div>
-          <button className="text-#6E6E6E hover:text-gray-800 transition-colors duration-200 font-semibold">
+          <button className="font-montserrat text-#6E6E6E hover:text-gray-800 transition-colors duration-200 font-semibold">
             Clear
           </button>
         </div>
 
-        <div className="space-y-4 max-h-[calc(100vh-12rem)] overflow-y-auto">
+        <div className="font-montserrat space-y-4 max-h-[calc(100vh-12rem)] overflow-y-auto">
           {[1, 2, 3, 4, 5, 6].map((_, index) => (
             <div
               key={index}
@@ -336,16 +334,18 @@ export function Dashboard() {
             >
               <div className="w-8 h-8 bg-gray-200 rounded-full flex-shrink-0"></div>
               <div className="flex-grow">
-                <p className="text-sm text-gray-900 font-medium">
+                <p className="font-montserrat text-sm text-gray-900 font-medium">
                   New Message from XYZ1234
                 </p>
-                <p className="text-xs text-gray-500 mt-1">1 sec ago</p>
+                <p className="font-montserrat text-xs text-gray-500 mt-1">
+                  1 sec ago
+                </p>
               </div>
             </div>
           ))}
         </div>
 
-        <button className="w-full mt-4 py-2 text-center text-gray-600 hover:text-gray-800 transition-colors duration-200 font-medium">
+        <button className="font-montserrat w-full mt-4 py-2 text-center text-gray-600 hover:text-gray-800 transition-colors duration-200 font-medium">
           View all
         </button>
       </div>

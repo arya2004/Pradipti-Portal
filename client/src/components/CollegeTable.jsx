@@ -7,7 +7,7 @@ export function CollegeTable({ colleges = [], loading }) {
 
   if (loading) {
     return (
-      <div className="bg-white rounded-lg shadow-sm p-8">
+      <div className="font-montserrat bg-white rounded-lg shadow-sm p-8">
         <div className="animate-pulse">
           <div className="h-4 bg-gray-200 rounded w-3/4 mb-4"></div>
           <div className="h-4 bg-gray-200 rounded w-1/2 mb-4"></div>
@@ -19,14 +19,14 @@ export function CollegeTable({ colleges = [], loading }) {
 
   if (colleges.length === 0) {
     return (
-      <div className="bg-white rounded-lg shadow-sm p-8 text-center text-gray-500">
+      <div className="font-montserrat bg-white rounded-lg shadow-sm p-8 text-center text-gray-500">
         No colleges found
       </div>
     );
   }
 
   return (
-    <div className="bg-white rounded-lg shadow-sm overflow-x-auto">
+    <div className="font-montserrat bg-white rounded-lg shadow-sm overflow-x-auto">
       <table className="min-w-full">
         <thead>
           <tr className="text-left text-sm text-gray-500">

@@ -82,7 +82,7 @@ export function ProgramManagementDashboard() {
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
-    <div className="p-6 md:p-8 pt-16 md:pt-8">
+    <div className="font-montserrat p-6 md:p-8 pt-16 md:pt-8">
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-2xl font-semibold">Program Management</h1>
       </div>

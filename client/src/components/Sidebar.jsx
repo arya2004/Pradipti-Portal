@@ -18,7 +18,7 @@ export function Sidebar({ onClose }) {
       <div className="p-4 border-b">
         <img src="/image.png"></img>
       </div>
-      <nav className="p-4">
+      <nav className="font-montserrat p-4">
         <SidebarLink
           href="/"
           icon={<LayoutDashboard size={20} />}
