@@ -12,6 +12,8 @@ export default {
         textGreen: '#00891B',
         bgGreen: 'rgba(63, 202, 91, 0.26)',
         bgRed: 'rgba(228, 38, 0, 0.15)',
+        myGray: "rgba(217, 217, 217, 0.42)",
+        textGray: "#525252",
       }
     },
   },

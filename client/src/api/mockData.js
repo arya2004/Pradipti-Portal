@@ -15,7 +15,6 @@ export const updateCollegeStatus = (id, newStatus) => {
   return [...mockColleges]; // Return updated list for UI updates
 };
 
-
 const handleStatusChange = (collegeId, status) => {
   // Update the status using the function and get the updated list of colleges
   const updatedColleges = updateCollegeStatus(collegeId, status);
@@ -24,7 +23,6 @@ const handleStatusChange = (collegeId, status) => {
   setColleges(updatedColleges);
   setFilteredColleges(updatedColleges);
 };
-
 
 export const Program = {
   fetchPrograms: async () => [
@@ -49,6 +47,12 @@ const mockStudents = [
   { name: 'Omkar Lolage', id: 'APP0124', attended: true, status: 'Approved' },
   { name: 'Prajwal Weladi', id: 'APP0125', attended: true, status: 'Approved' },
   { name: 'Arya Rajvaidya', id: 'APP0126', attended: false, status: 'Rejected' }
+];
+
+const mockNotifications = [
+  { id: 1, message: "New application submitted", time: "1 min ago" },
+  { id: 2, message: "Application approved", time: "5 mins ago" },
+  { id: 3, message: "Program slots updated", time: "10 mins ago" }
 ];
 
 const mockUser = {
@@ -82,6 +86,11 @@ export const api = {
   async fetchProgramStudents(programId) {
     await new Promise(resolve => setTimeout(resolve, 600));
     return mockStudents;
+  },
+
+  async fetchNotifications() {
+    await new Promise(resolve => setTimeout(resolve, 500));
+    return mockNotifications;
   },
 
   async fetchCurrentUser() {
