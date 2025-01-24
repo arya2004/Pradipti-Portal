@@ -15,7 +15,7 @@ const Footer = () => {
         {/* Image at the center */}
         <div className="mb-8 flex justify-center">
           <img
-            src="./image.png" // Replace with your image URL
+            src="/image.png" // Replace with your image URL
             alt="Footer Logo"
             className="w-32" // Adjust the size as needed
           />

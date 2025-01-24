@@ -1,5 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { Search, Bell, Filter, Pencil } from "lucide-react";
+import {
+  Search,
+  Bell,
+  Filter,
+  Pencil,
+  Calendar,
+  PlayCircleIcon,
+  MapPinIcon,
+  HourglassIcon,
+} from "lucide-react";
 import { api } from "../api/mockData";
 
 export function ProgramManagement() {
@@ -200,10 +209,24 @@ export function ProgramManagement() {
             {editMode ? "Save" : "Edit"}
           </button>
         </div>
-
+        <div className="font-montserrat content flex py-2">
+          <img className="w-100 h-80 mb-4" src="/image2.png"></img>
+          <p className="font-montserrat ms-5 me-7 text-xl">
+            Gain hands-on experience in air traffic management by working on
+            real-world projects that enhance operational efficiency, safety, and
+            communication systems in aviation. This internship offers exposure
+            to industry tools, data analysis, and decision-making processes
+            critical to air traffic operations.
+          </p>
+        </div>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 mb-6">
           <div>
-            <div className="text-sm text-gray-500">START DATE</div>
+            <div className="text-sm text-gray-500">
+              <span>
+                <PlayCircleIcon className="w-4 h-4 text-myBlue" />
+                START DATE
+              </span>
+            </div>
             {editMode ? (
               <input
                 type="text"
@@ -221,7 +244,10 @@ export function ProgramManagement() {
             )}
           </div>
           <div>
-            <div className="text-sm text-gray-500">DURATION</div>
+            <div className="text-sm text-gray-500">
+              <Calendar className="w-4 h-4 text-myBlue" />
+              DURATION
+            </div>
             {editMode ? (
               <input
                 type="text"
@@ -239,7 +265,10 @@ export function ProgramManagement() {
             )}
           </div>
           <div>
-            <div className="text-sm text-gray-500">LOCATION</div>
+            <div className="text-sm text-gray-500">
+              <MapPinIcon className="w-4 h-4 text-myBlue" />
+              LOCATION
+            </div>
             {editMode ? (
               <input
                 type="text"
@@ -257,7 +286,10 @@ export function ProgramManagement() {
             )}
           </div>
           <div>
-            <div className="text-sm text-gray-500">APPLY BY</div>
+            <div className="text-sm text-gray-500">
+              <HourglassIcon className="w-4 h-4 text-myBlue" />
+              APPLY BY
+            </div>
             {editMode ? (
               <input
                 type="text"
