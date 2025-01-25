@@ -50,9 +50,21 @@ const mockStudents = [
 ];
 
 const mockNotifications = [
-  { id: 1, message: "New application submitted", time: "1 min ago" },
-  { id: 2, message: "Application approved", time: "5 mins ago" },
-  { id: 3, message: "Program slots updated", time: "10 mins ago" }
+  { id: 1, sender: "Designer", date: "22 DEC 24", time: "16:10", category: "Application", priority: "High" },
+  { id: 2, sender: "Designer", date: "22 DEC 24", time: "16:10", category: "College", priority: "High" },
+  { id: 3, sender: "Designer", date: "22 DEC 24", time: "16:10", category: "System Alert", priority: "High" },
+  { id: 4, sender: "Designer", date: "22 DEC 24", time: "16:10", category: "Announcement", priority: "Low" },
+  { id: 5, sender: "Designer", date: "22 DEC 24", time: "16:10", category: "News", priority: "Medium" },
+  { id: 6, sender: "Designer", date: "22 DEC 24", time: "16:10", category: "Security", priority: "High" },
+  { id: 7, sender: "Admin", date: "23 DEC 24", time: "09:00", category: "Policy Update", priority: "Medium" },
+  { id: 8, sender: "System", date: "23 DEC 24", time: "10:30", category: "Security", priority: "High" },
+  { id: 9, sender: "Admin", date: "23 DEC 24", time: "11:45", category: "Announcement", priority: "Low" },
+  { id: 10, sender: "Team Lead", date: "24 DEC 24", time: "14:20", category: "College", priority: "High" },
+  { id: 11, sender: "HR", date: "24 DEC 24", time: "15:15", category: "Application", priority: "Medium" },
+  { id: 12, sender: "Manager", date: "24 DEC 24", time: "16:50", category: "System Alert", priority: "High" },
+  { id: 13, sender: "IT Support", date: "25 DEC 24", time: "09:30", category: "Security", priority: "Critical" },
+  { id: 14, sender: "Marketing", date: "25 DEC 24", time: "12:15", category: "News", priority: "Medium" },
+  { id: 15, sender: "CEO", date: "25 DEC 24", time: "15:00", category: "Announcement", priority: "High" },
 ];
 
 const mockUser = {

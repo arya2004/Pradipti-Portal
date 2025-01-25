@@ -6,6 +6,8 @@ import { Dashboard } from "./pages/Dashboard";
 import { ProgramManagement } from "./pages/ProgramManagement";
 import { ProgramManagementDashboard } from "./pages/ProgramManagementDashboard";
 import { CollegeManagement } from "./pages/CollegeManagement";
+import { Notifications } from "./pages/Notification";
+import { Admin } from "./pages/Admin"
 import Footer from "./components/Footer"; // Import Footer component
 
 export default function App() {
@@ -61,6 +63,14 @@ export default function App() {
                 <Route
                   path="/college-management"
                   element={<CollegeManagement />}
+                />
+                <Route
+                  path="/admin"
+                  element={<Admin />}
+                />
+                <Route
+                  path="/notifications"
+                  element={<Notifications />}
                 />
                 <Route path="*" element={<div>404: Page Not Found</div>} />
               </Routes>
