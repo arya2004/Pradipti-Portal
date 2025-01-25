@@ -7,7 +7,7 @@ export default function LatestNotification({ onClose }) {
   const isActive = (path) => location.pathname === path;
   return (
     <>
-      <div className="w-full lg:w-1/4 bg-white border-l border-gray-200 p-4">
+      <div className="font-montserrat w-full lg:w-1/4 bg-white border-l border-gray-200 p-4">
         <div className="flex justify-between items-center mb-6">
           <div className="flex items-center gap-2">
             <svg
@@ -64,7 +64,7 @@ function NotificationLink({ href, icon, children, active, onClick }) {
     <Link
       to={href}
       onClick={onClick}
-      className={`flex items-center space-x-3 p-3 rounded-lg mb-2 transition-colors ${
+      className={`font-montserrat flex items-center space-x-3 p-3 rounded-lg mb-2 transition-colors ${
         active ? "bg-blue-50 text-blue-600" : "text-gray-600 hover:bg-gray-50"
       }`}
     >

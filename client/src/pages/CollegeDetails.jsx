@@ -26,7 +26,7 @@ export function CollegeDetails() {
     fetchDashboardData();
   }, []);
   return (
-    <div className="font-monteserrat flex min-h-screen bg-gray-50">
+    <div className="font-montserrat flex min-h-screen bg-gray-50">
       <div className="flex-1 p-8">
         <div className="flex justify-between items-center mb-8">
           <h1 className="text-2xl font-semibold text-gray-800">
@@ -90,7 +90,7 @@ export function CollegeDetails() {
                 </th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-200">
+            <tbody className=" font-montserrat divide-y divide-gray-200">
               {colleges.map((college) => (
                 <tr key={college.id} className="hover:bg-gray-50">
                   <td className="px-6 py-4">
@@ -131,7 +131,7 @@ export function CollegeDetails() {
               ))}
             </tbody>
           </table>
-          <div className="flex items-center justify-between px-6 py-4 bg-gray-50">
+          <div className="font-montserrat flex items-center justify-between px-6 py-4 bg-gray-50">
             <div className="text-sm text-gray-600">
               Showing 1 to 8 of 100 results
             </div>
