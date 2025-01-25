@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Search, Filter } from "lucide-react";
 import { mockColleges, updateCollegeStatus } from "../api/mockData";
+import LatestNotification from "../components/LatestNotfication";
 
 export function CollegeManagement() {
   const [searchTerm, setSearchTerm] = useState("");
