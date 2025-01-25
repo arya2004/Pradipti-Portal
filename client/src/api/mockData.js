@@ -6,34 +6,14 @@ export const mockColleges = [
   { name: 'Symbiosis Institute', id: 'CL-0182', state: 'MH', city: 'Pune', status: 'Approved', programs: ['FP', 'BPI', 'IP'] }
 ];
 
-// Function to update the status of a college and persist it in memory
-export const updateCollegeStatus = (id, newStatus) => {
-  const collegeIndex = mockColleges.findIndex(college => college.id === id);
-  if (collegeIndex !== -1) {
-    mockColleges[collegeIndex].status = newStatus;
-  }
-  return [...mockColleges]; // Return updated list for UI updates
-};
+const mockPrograms = [
+  { name: "Air Traffic Management Intern 1", id: "APP-2025-001", applications: 2, slotsRemaining: "3/10" },
+  { name: "Air Traffic Management Intern 2", id: "APP-2025-002", applications: 2, slotsRemaining: "7/10" },
+  { name: "Air Traffic Management Intern 3", id: "APP-2025-003", applications: 2, slotsRemaining: "1/10" },
+  { name: "Air Traffic Management Intern 4", id: "APP-2025-004", applications: 2, slotsRemaining: "1/10" }
+];
 
-const handleStatusChange = (collegeId, status) => {
-  // Update the status using the function and get the updated list of colleges
-  const updatedColleges = updateCollegeStatus(collegeId, status);
-
-  // Update the state to reflect the changes in both `colleges` and `filteredColleges`
-  setColleges(updatedColleges);
-  setFilteredColleges(updatedColleges);
-};
-
-export const Program = {
-  fetchPrograms: async () => [
-    { name: "Air Traffic Management Intern 1", id: "APP-2025-001", applications: 2, slotsRemaining: "3/10" },
-    { name: "Air Traffic Management Intern 2", id: "APP-2025-002", applications: 2, slotsRemaining: "7/10" },
-    { name: "Air Traffic Management Intern 3", id: "APP-2025-003", applications: 2, slotsRemaining: "1/10" },
-    { name: "Air Traffic Management Intern 4", id: "APP-2025-004", applications: 2, slotsRemaining: "1/10" }
-  ]
-};
-
-const mockProgram = {
+const mockProgramDetails = {
   title: 'Air Traffic Management Intern',
   courseCode: 'PP12345',
   startDate: '10th Dec\' 24',
@@ -73,40 +53,109 @@ const mockUser = {
   email: 'admin@example.com'
 };
 
-// Simulated API endpoints
+const statsData = {
+  total: mockColleges.length,
+  approved: mockColleges.filter(c => c.status === 'Approved').length,
+  pending: mockColleges.filter(c => c.status === 'Pending').length,
+  trends: {
+    approved: [40, 60, 45, 70, 67],
+    pending: [30, 45, 35, 50, 56],
+    dates: ["Dec 21", "Dec 22", "Dec 23", "Dec 24", "Dec 25"]
+  }
+};
+
+const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+
+export const updateCollegeStatus = (id, newStatus) => {
+  const collegeIndex = mockColleges.findIndex(college => college.id === id);
+  if (collegeIndex !== -1) {
+    mockColleges[collegeIndex].status = newStatus;
+  }
+  return [...mockColleges];
+};
+
+export const Program = {
+  fetchPrograms: async () => {
+    await delay(800);
+    return mockPrograms;
+  }
+};
+
 export const api = {
-  async fetchColleges() {
-    // Simulate API delay
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    return mockColleges;
+  async fetchColleges(filters = {}) {
+    await delay(1000);
+    let filteredColleges = [...mockColleges];
+    
+    if (filters.search) {
+      filteredColleges = filteredColleges.filter(college => 
+        college.name.toLowerCase().includes(filters.search.toLowerCase()) ||
+        college.city.toLowerCase().includes(filters.search.toLowerCase())
+      );
+    }
+    
+    if (filters.status) {
+      filteredColleges = filteredColleges.filter(college => 
+        college.status === filters.status
+      );
+    }
+    
+    return filteredColleges;
   },
-  
-  async fetchStats() {
-    await new Promise(resolve => setTimeout(resolve, 800));
-    return {
-      total: mockColleges.length,
-      pending: mockColleges.filter(c => c.status === 'Pending').length,
-      approved: mockColleges.filter(c => c.status === 'Approved').length
-    };
+
+  async updateCollegeStatus(collegeId, status) {
+    await delay(1000);
+    return updateCollegeStatus(collegeId, status);
   },
 
   async fetchProgram(id) {
-    await new Promise(resolve => setTimeout(resolve, 800));
-    return mockProgram;
+    await delay(800);
+    return mockProgramDetails;
   },
 
   async fetchProgramStudents(programId) {
-    await new Promise(resolve => setTimeout(resolve, 600));
+    await delay(600);
     return mockStudents;
   },
 
-  async fetchNotifications() {
-    await new Promise(resolve => setTimeout(resolve, 500));
-    return mockNotifications;
+  async fetchStats() {
+    await delay(800);
+    return statsData;
   },
 
   async fetchCurrentUser() {
-    await new Promise(resolve => setTimeout(resolve, 500));
+    await delay(500);
     return mockUser;
+  },
+  async fetchNotifications() {
+    await delay(500);
+    return mockNotifications;
+  },
+
+  async clearNotifications() {
+    await delay(500);
+    return { success: true, message: 'All notifications cleared' };
+  },
+
+  async markNotificationAsRead(notificationId) {
+    await delay(300);
+    const notification = mockNotifications.find(n => n.id === notificationId);
+    if (!notification) throw new Error('Notification not found');
+    return { success: true, notification };
+  },
+
+  async uploadMOU(collegeId, file) {
+    await delay(1500);
+    const college = mockColleges.find(c => c.id === collegeId);
+    if (!college) throw new Error('College not found');
+    return { success: true, message: 'MOU uploaded successfully' };
+  },
+
+  async downloadMOU(collegeId) {
+    console.log("triggered")
+    await delay(1000);
+    const college = mockColleges.find(c => c.id === collegeId);
+    console.log(college);
+    if (!college) throw new Error('College not found');
+    window.open ('https://drive.google.com/file/d/11H9I7r1Y5AozZ9Oy7N6qW-_qWLaSVkda/view?usp=drive_link' );
   }
 };

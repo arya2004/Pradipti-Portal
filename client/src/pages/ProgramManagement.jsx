@@ -10,6 +10,7 @@ import {
   HourglassIcon,
 } from "lucide-react";
 import { api } from "../api/mockData";
+import LatestNotification from "../components/LatestNotfication";
 
 export function ProgramManagement() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -385,7 +386,6 @@ export function ProgramManagement() {
             </tbody>
           </table>
         </div>
-
         <div className="mt-4 text-sm text-gray-600">
           Live attendance:{" "}
           <span className="font-semibold">{attendanceStats.attended}</span> out

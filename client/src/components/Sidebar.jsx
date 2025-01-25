@@ -8,7 +8,7 @@ import {
 } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 
-export function Sidebar({ onClose }) {
+export default function Sidebar({ onClose }) {
   const location = useLocation();
 
   const isActive = (path) => location.pathname === path;
@@ -56,6 +56,14 @@ export function Sidebar({ onClose }) {
         onClick={onClose}
         >          
           Notifications
+        </SidebarLink>
+        <SidebarLink
+          href="/college-details"
+          icon={<Building2 size={20} />}
+          active={isActive("/college-details")}
+          onClick={onClose}
+        >
+          College Details
         </SidebarLink>
       </nav>
     </>
