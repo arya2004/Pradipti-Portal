@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Menu, X } from "lucide-react";
-import { Sidebar } from "./components/Sidebar";
+import Sidebar from "./components/Sidebar";
 import { Dashboard } from "./pages/Dashboard";
 import { ProgramManagement } from "./pages/ProgramManagement";
 import { ProgramManagementDashboard } from "./pages/ProgramManagementDashboard";
 import { CollegeManagement } from "./pages/CollegeManagement";
-import Footer from "./components/Footer"; // Import Footer component
+import Footer from "./components/Footer";
+import { CollegeDetails } from "./pages/CollegeDetails";
 
 export default function App() {
   const [showMobileSidebar, setShowMobileSidebar] = useState(false);
@@ -62,6 +63,7 @@ export default function App() {
                   path="/college-management"
                   element={<CollegeManagement />}
                 />
+                <Route path="/college-details" element={<CollegeDetails />} />
                 <Route path="*" element={<div>404: Page Not Found</div>} />
               </Routes>
             </div>
