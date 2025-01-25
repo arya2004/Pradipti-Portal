@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Search, Filter } from "lucide-react";
 import { Program } from "../api/mockData";
 import { useNavigate } from "react-router-dom";
+import LatestNotification from "../components/LatestNotfication";
 
 export function ProgramManagementDashboard() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -108,7 +109,7 @@ export function ProgramManagementDashboard() {
       </div>
 
       <div className="bg-white rounded-lg shadow-sm p-2">
-        <div className="overflow-x-auto">
+        <div className="">
           <table className="w-full">
             <thead>
               <tr className="text-left border-b">
