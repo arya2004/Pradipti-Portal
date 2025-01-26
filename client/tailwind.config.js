@@ -17,6 +17,8 @@ export default {
         bgRed: 'rgba(228, 38, 0, 0.15)',
         myGray: "rgba(217, 217, 217, 0.42)",
         textGray: "#525252",
+        bgGray: "#ECEAEA",
+        dropBG: "rgba(70, 95, 241, 0.14)",
       }
     },
   },
