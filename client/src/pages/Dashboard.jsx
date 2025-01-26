@@ -63,6 +63,7 @@ export function Dashboard() {
 
     fetchDashboardData();
   }, []);
+
   const pieData = {
     labels: ["Approved", "Pending"],
     datasets: [
@@ -70,6 +71,7 @@ export function Dashboard() {
         data: [stats.approved || 0, stats.pending || 0],
         backgroundColor: ["#E42600", "#3FCA5B"],
         borderWidth: 0,
+        weight: 0.7,
       },
       {
         data: [stats.approved || 0, stats.pending || 0],
@@ -81,10 +83,11 @@ export function Dashboard() {
         data: [stats.approved || 0, stats.pending || 0],
         backgroundColor: ["rgba(70, 95, 241, 1)"],
         borderWidth: 0,
-        weight: 0.5,
+        weight: 0.3,
       },
     ],
   };
+
   const pieOptions = {
     plugins: {
       legend: {
@@ -101,7 +104,10 @@ export function Dashboard() {
       },
     },
     animation: false,
+    responsive: true,
+    maintainAspectRatio: false,
   };
+
   const lineData = {
     labels: ["Dec 21", "Dec 22", "Dec 23", "Dec 24", "Dec 25"],
     datasets: [
@@ -112,10 +118,9 @@ export function Dashboard() {
         backgroundColor: "#C1DED5",
         borderWidth: 2,
         fill: "origin",
-        tension: 0.4,
+        tension: 0,
         pointRadius: 4,
         pointBackgroundColor: "#3FCA5B",
-        // pointBorderColor: "#fff",
         pointBorderWidth: 2,
         order: 2,
       },
@@ -126,10 +131,9 @@ export function Dashboard() {
         backgroundColor: "#FDEAE6",
         borderWidth: 2,
         fill: "origin",
-        tension: 0.4,
+        tension: 0,
         pointRadius: 4,
         pointBackgroundColor: "#E42600",
-        // pointBorderColor: "#fff",
         pointBorderWidth: 2,
         order: 1,
       },
@@ -139,13 +143,31 @@ export function Dashboard() {
   const lineOptions = {
     plugins: {
       legend: {
-        position: "bottom",
+        display: true,
+        position: "top",
+        align: "center",
         labels: {
           usePointStyle: true,
           pointStyle: "circle",
+          pointBackgroundColor: "#FDEAE6",
+          pointRadius: 2,
           padding: 10,
           font: {
             size: 12,
+            family: "Montserrat",
+          },
+          generateLabels: (chart) => {
+            const datasets = chart.data.datasets;
+            return datasets.map((dataset, i) => ({
+              text: `${dataset.label} : ${
+                dataset.data[dataset.data.length - 1]
+              }`,
+              fillStyle: dataset.pointBackgroundColor,
+              strokeStyle: dataset.pointBackgroundColor,
+              lineWidth: 0,
+              hidden: false,
+              index: i,
+            }));
           },
         },
       },
@@ -212,29 +234,29 @@ export function Dashboard() {
 
   if (error) {
     return (
-      <div className="p-6 md:p-8">
+      <div className="p-4 md:p-6 lg:p-8">
         <div className="bg-red-50 text-red-600 p-4 rounded-lg">{error}</div>
       </div>
     );
   }
 
   return (
-    <div className="flex flex-row min-h-screen">
-      <div className="flex-grow p-6 md:p-8 pt-16 md:pt-8 bg-gray-50">
-        <div className="flex justify-between items-center mb-8">
-          <h2 className="font-montserrat text-2xl text-gray-800 font-semibold">
+    <div className="flex flex-col lg:flex-row min-h-screen bg-gray-50">
+      <div className="flex-grow p-4 md:p-6 lg:p-8 pt-16 lg:pt-8">
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 md:mb-8">
+          <h2 className="font-montserrat text-xl md:text-2xl text-gray-800 font-semibold mb-2 sm:mb-0">
             Overview
           </h2>
-          <div className="font-montserrat text-blue-600">
+          <div className="font-montserrat text-blue-600 text-sm md:text-base">
             {loading ? (
-              <div className="font-montserrat animate-pulse bg-gray-200 h-6 w-32 rounded"></div>
+              <div className="animate-pulse bg-gray-200 h-6 w-32 rounded"></div>
             ) : (
               `Welcome, ${user?.name || "Admin"}`
             )}
           </div>
         </div>
 
-        <div className="font-montserrat grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        <div className="font-montserrat grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 mb-6 md:mb-8">
           <StatCard
             title="Total Applications"
             value={stats.total}
@@ -251,41 +273,49 @@ export function Dashboard() {
             type="approved"
           />
         </div>
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-          <div className="bg-white shadow rounded-lg p-6">
+
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 md:gap-6 mb-6 md:mb-8">
+          <div className="bg-white shadow rounded-lg p-4 md:p-6">
             <div className="flex items-center justify-between mb-4">
-              <h3 className="font-montserrat text-lg font-semibold text-gray-800">
+              <h3 className="font-montserrat text-base md:text-lg font-semibold text-gray-800">
                 Application Status
               </h3>
-              <select className="font-montserrat border rounded-md px-2 py-1 text-sm text-gray-600 hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                <option>December 2024</option>
-              </select>
             </div>
-            <div className="ms-16 relative h-[300px]">
+            <div className="relative h-[250px] md:h-[300px] w-full max-w-[280px] mx-auto">
               <Pie
                 data={pieData}
                 options={pieOptions}
                 className="w-full h-full"
               />
-              <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center ">
-                <div className="font-montserrat text-4xl font-bold text-blue-600">
-                  {stats.total}
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="font-montserrat text-3xl md:text-4xl font-bold text-blue-600">
+                  {stats.total || 0}
                 </div>
               </div>
             </div>
           </div>
 
-          {/* Line Chart */}
-          <div className="bg-white shadow rounded-lg p-6">
-            <div className="flex items-center justify-between mb-4">
-              <h3 className="font-montserrat text-lg font-semibold text-gray-800">
+          <div className="bg-white shadow rounded-lg p-4 md:p-6 lg:col-span-2">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-4 gap-2 sm:gap-4">
+              <h3 className="font-montserrat text-base md:text-lg font-semibold text-gray-800">
                 Decision Trends
               </h3>
-              <select className="font-montserrat border rounded-md px-2 py-1 text-sm text-gray-600 hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                <option>Decision Trends</option>
-              </select>
+              <div className="flex items-center gap-2 w-full sm:w-auto">
+                <select className="bg-dropBG font-montserrat border rounded-md px-2 py-1 text-sm text-gray-600 hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                  <option>Decision Trends</option>
+                  <option>All Trends</option>
+                  <option>Approved Only</option>
+                  <option>Pending Only</option>
+                </select>
+                <select className="bg-bgGray font-montserrat border rounded-md px-2 py-1 text-sm text-gray-600 hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                  <option>December 2024</option>
+                  <option>November 2024</option>
+                  <option>October 2024</option>
+                  <option>September 2024</option>
+                </select>
+              </div>
             </div>
-            <div className="h-[300px]">
+            <div className="h-[250px] md:h-[300px]">
               <Line
                 data={lineData}
                 options={lineOptions}
@@ -296,7 +326,7 @@ export function Dashboard() {
         </div>
 
         <div className="mb-6">
-          <h3 className="font-montserrat text-lg font-semibold mb-4">
+          <h3 className="font-montserrat text-base md:text-lg font-semibold mb-4">
             College Tracking
           </h3>
           <CollegeTable colleges={colleges} loading={loading} />
