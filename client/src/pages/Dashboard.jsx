@@ -297,12 +297,9 @@ export function Dashboard() {
 
           <div className="bg-white shadow rounded-lg p-4 md:p-6 lg:col-span-2">
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-4 gap-2 sm:gap-4">
-              <h3 className="font-montserrat text-base md:text-lg font-semibold text-gray-800">
-                Decision Trends
-              </h3>
-              <div className="flex items-center gap-2 w-full sm:w-auto">
+              <div className="flex items-center gap-10 w-full sm:w-auto">
                 <select className="bg-dropBG font-montserrat border rounded-md px-2 py-1 text-sm text-gray-600 hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                  <option>Decision Trends</option>
+                  <option className="font-semibold">Decision Trends</option>
                   <option>All Trends</option>
                   <option>Approved Only</option>
                   <option>Pending Only</option>
