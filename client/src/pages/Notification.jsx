@@ -1,207 +1,163 @@
-import React, { useState, useEffect } from "react";
-import { Search, Filter, Trash2 } from "lucide-react";
-import { api } from "../api/mockData";
+import React, { useState } from "react";
+import { Trash2 } from "lucide-react";
+import { mockNotifications } from "../api/mockData";
 
 export function Notifications() {
-  const [searchTerm, setSearchTerm] = useState("");
-  const [showFilters, setShowFilters] = useState(false);
-  const [selectedFilters, setSelectedFilters] = useState({
-    date: "",
-    category: "",
-    priority: "",
-  });
-  const [notifications, setNotifications] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [notifications, setNotifications] = useState(mockNotifications);
   const [currentPage, setCurrentPage] = useState(1);
-  const [selectedNotifications, setSelectedNotifications] = useState([]);
-  const notificationsPerPage = 8;
+  const itemsPerPage = 8;
 
-  useEffect(() => {
-    const fetchNotifications = async () => {
-      try {
-        const fetchedNotifications = await api.fetchNotifications();
-        setNotifications(fetchedNotifications);
-        setLoading(false);
-      } catch (error) {
-        console.error("Failed to fetch notifications:", error);
-        setLoading(false);
-      }
-    };
-
-    fetchNotifications();
-  }, []);
-
-  const handleSearch = (e) => setSearchTerm(e.target.value);
-
-  const handleFilterChange = (filter, value) => {
-    setSelectedFilters((prev) => ({ ...prev, [filter]: value }));
+  const getPriorityClass = (priority) => {
+    // switch (priority) {
+    //   case "High":
+    //     return "font-montserrat bg-red-100 text-red-800";
+    //   case "Medium":
+    //     return "font-montserrat bg-yellow-100 text-yellow-800";
+    //   case "Low":
+    //     return "font-montserrat bg-green-100 text-green-800";
+    //   default:
+    //     return "font-montserrat bg-gray-100 text-gray-800";
+    // }
+    return "font-montserrat text-currcol";
   };
 
-  const toggleNotificationSelection = (id) => {
-    setSelectedNotifications(prev => 
-      prev.includes(id) 
-        ? prev.filter(selectedId => selectedId !== id)
-        : [...prev, id]
-    );
-  };
-
-  const deleteSelectedNotifications = () => {
-    setNotifications(prev => 
-      prev.filter(notification => !selectedNotifications.includes(notification.id))
-    );
-    setSelectedNotifications([]);
-  };
-
-  const filteredNotifications = notifications
-    .filter((notification) =>
-      notification.sender.toLowerCase().includes(searchTerm.toLowerCase())
-    )
-    .filter(
-      (notification) =>
-        (!selectedFilters.date || notification.date === selectedFilters.date) &&
-        (!selectedFilters.category || notification.category === selectedFilters.category) &&
-        (!selectedFilters.priority || notification.priority === selectedFilters.priority)
-    );
-
-  const totalPages = Math.ceil(filteredNotifications.length / notificationsPerPage);
-  const startIndex = (currentPage - 1) * notificationsPerPage;
-  const currentNotifications = filteredNotifications.slice(
-    startIndex,
-    startIndex + notificationsPerPage
-  );
-
-  const goToPage = (page) => {
-    if (page >= 1 && page <= totalPages) {
-      setCurrentPage(page);
+  const getCategoryClass = (category) => {
+    if (category === "System Alert") {
+      return "font-montserrat font-semibold text-warningRed";
     }
+    return "font-montserrat text-notifColours";
   };
 
-  if (loading) {
-    return <div className="p-6 text-center">Loading notifications...</div>;
-  }
+  const totalPages = Math.ceil(notifications.length / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const currentNotifications = notifications.slice(startIndex, endIndex);
 
   return (
-    <div className="p-6 bg-gray-50">
-      <h1 className="font-montserrat text-2xl font-semibold mb-6">Notifications</h1>
-
-      <div className="flex gap-4 mb-8">
-        <div className="flex-1 relative">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+    <div className="font-montserrat flex-1 p-8">
+      <div className="mb-6">
+        <h2 className="text-2xl font-semibold mb-4">Notifications</h2>
+        <div className="flex justify-between items-center">
           <input
             type="text"
             placeholder="Search Notifications..."
-            className="w-full pl-10 pr-4 py-2 border rounded-lg shadow-sm"
-            value={searchTerm}
-            onChange={handleSearch}
+            className="w-96 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
+          <button className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+            Apply Filters
+          </button>
         </div>
-        <button
-          className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg"
-          onClick={() => setShowFilters(!showFilters)}
-        >
-          <Filter className="w-4 h-4" />
-          Apply Filters
-        </button>
       </div>
 
-      <div className="bg-white rounded-lg shadow-sm">
-        <table className="w-full">
+      <div className="bg-white rounded-lg shadow">
+        <table className="w-full ">
           <thead>
-            <tr className="text-left">
-              <th className="py-2 px-4">
-                <input 
-                  type="checkbox" 
-                  checked={selectedNotifications.length === currentNotifications.length}
-                  onChange={() => {
-                    if (selectedNotifications.length === currentNotifications.length) {
-                      setSelectedNotifications([]);
-                    } else {
-                      setSelectedNotifications(currentNotifications.map(n => n.id));
-                    }
-                  }} 
-                />
+            <tr className="text-notifColours border-b font-bold ">
+              <th className="p-4 text-left w-12">
+                <input type="checkbox" className="rounded" />
               </th>
-              <th className="py-2 px-4 font-medium">No.</th>
-              <th className="py-2 px-4 font-medium">Notification Title</th>
-              <th className="py-2 px-4 font-medium">Date & Time</th>
-              <th className="py-2 px-4 font-medium">Category</th>
-              <th className="py-2 px-4 font-medium">Priority</th>
-              <th className="py-2 px-4">
-                {selectedNotifications.length > 0 && (
-                  <button 
-                    onClick={deleteSelectedNotifications}
-                    className="text-red-600 hover:text-red-800"
-                  >
-                    <Trash2 className="w-5 h-5" />
-                  </button>
-                )}
-              </th>
+              <th className="p-4 text-left w-16">No.</th>
+              <th className="p-4 text-left">Notification Title</th>
+              <th className="p-4 text-left">Date & Time</th>
+              <th className="p-4 text-left">Category</th>
+              <th className="p-4 text-left">Priority</th>
+              <th className="p-4 text-left w-16"></th>
             </tr>
           </thead>
           <tbody>
-            {currentNotifications.map((notification, index) => (
-              <tr key={notification.id} className="border-t mb-4">
-                <td className="py-2 px-4">
-                  <input 
-                    type="checkbox" 
-                    checked={selectedNotifications.includes(notification.id)}
-                    onChange={() => toggleNotificationSelection(notification.id)}
-                  />
+            {currentNotifications.map((notification) => (
+              <tr key={notification.id} className="border-b hover:bg-gray-50">
+                <td className="p-4">
+                  <input type="checkbox" className="rounded" />
                 </td>
-                <td className="py-2 px-4">{startIndex + index + 1}</td>
-                <td className="py-2 px-4">
-                  New Message from{" "}
-                  <span className="text-[#494949] underline font-bold">
-                    {notification.sender}
+                <td className="p-4 text-black font-bold ">{notification.id}</td>
+                <td className="p-4">
+                  <div>
+                    <span className="font-medium text-currcol">
+                      New Message from{" "}
+                      <a
+                        href="#"
+                        className="font-semibold text-black underline"
+                      >
+                        {notification.from}
+                      </a>
+                    </span>
+                    <p className="text-sm text-gray-500">
+                      {notification.message}
+                    </p>
+                  </div>
+                </td>
+                <td className="p-4">
+                  <div>
+                    <span>
+                      <div className="text-medium text-notifColours">
+                        {notification.date}
+                      </div>
+                    </span>
+                    <div className="text-extrabold text-notifColours font-bold">
+                      {notification.time}
+                    </div>
+                  </div>
+                </td>
+                <td className="text-notifColours font-medium p-4">
+                  <span className={getCategoryClass(notification.category)}>
+                    {notification.category}
                   </span>
                 </td>
-                <td className="py-2 px-4">
-                  {notification.date} <strong>{notification.time}</strong>
-                </td>
-                <td className="py-2 px-4">{notification.category}</td>
-                <td className="py-2 px-4">{notification.priority}</td>
-                <td className="py-2 px-4">
-                  <button
-                    className="text-red-600 hover:text-red-800"
-                    onClick={() => {
-                      setNotifications(prev => 
-                        prev.filter(n => n.id !== notification.id)
-                      );
-                      setSelectedNotifications(prev => 
-                        prev.filter(id => id !== notification.id)
-                      );
-                    }}
+                <td className="p-4">
+                  <span
+                    className={`px-2 py-1 rounded-full text-xs font-semibold  text-black${getPriorityClass(
+                      notification.priority
+                    )}`}
                   >
-                    <Trash2 className="w-5 h-5" />
+                    {notification.priority}
+                  </span>
+                </td>
+                <td className="p-4">
+                  <button className="text-warningRed hover:text-red-800">
+                    <Trash2 size={18} className="fill-warningRed" />
                   </button>
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
-      </div>
 
-      <div className="mt-6 flex justify-between items-center">
-        <div>
-          Showing {startIndex + 1} to{" "}
-          {Math.min(startIndex + notificationsPerPage, filteredNotifications.length)} of{" "}
-          {filteredNotifications.length} results
-        </div>
-        <div className="flex gap-2">
-          <button
-            className="px-3 py-1 border rounded-md disabled:opacity-50"
-            onClick={() => goToPage(currentPage - 1)}
-            disabled={currentPage === 1}
-          >
-            Previous
-          </button>
-          <button
-            className="px-3 py-1 border rounded-md"
-            onClick={() => goToPage(currentPage + 1)}
-            disabled={currentPage === totalPages}
-          >
-            Next
-          </button>
+        <div className="p-4 border-t flex items-center justify-between">
+          <div className="text-sm text-gray-600">
+            Showing {startIndex + 1} to{" "}
+            {Math.min(endIndex, notifications.length)} of {notifications.length}{" "}
+            results
+          </div>
+          <div className="flex space-x-2">
+            <button
+              onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+              disabled={currentPage === 1}
+              className="px-3 py-1 border rounded hover:bg-gray-100 disabled:opacity-50"
+            >
+              Previous
+            </button>
+            {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+              <button
+                key={page}
+                onClick={() => setCurrentPage(page)}
+                className={`px-3 py-1 rounded ${
+                  currentPage === page
+                    ? "bg-blue-600 text-white"
+                    : "border hover:bg-gray-100"
+                }`}
+              >
+                {page}
+              </button>
+            ))}
+            <button
+              onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
+              disabled={currentPage === totalPages}
+              className="px-3 py-1 border rounded hover:bg-gray-100 disabled:opacity-50"
+            >
+              Next
+            </button>
+          </div>
         </div>
       </div>
     </div>
