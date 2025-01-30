@@ -86,7 +86,7 @@ export const colleges = [
     location: 'Pune, MH',
     email: 'connect@vupune.ac.in',
     registeredStudents: 15420,
-    logo: 'https://images.unsplash.com/photo-1562774053-701939374585?w=128&h=128&fit=crop',
+    logo: '/college.png',
     programs: [
       { name: 'FB', code: 'FB001', fullName: 'Faculty of Business' },
       { name: 'BPI', code: 'BPI001', fullName: 'Business Process Innovation' },
