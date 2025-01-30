@@ -43,27 +43,21 @@ export default function Sidebar({ onClose }) {
         >
           College Management
         </SidebarLink>
-        <SidebarLink href="/admin" 
-        icon={<UserCog size={20} />} 
-        active={isActive("/admin")}
-        onClick={onClose}
+        <SidebarLink
+          href="/admin"
+          icon={<UserCog size={20} />}
+          active={isActive("/admin")}
+          onClick={onClose}
         >
           Admin
         </SidebarLink>
-        <SidebarLink href="/notifications" 
-        icon={<Bell size={20} />} 
-        active={isActive("/notifications")}
-        onClick={onClose}
-        >          
-          Notifications
-        </SidebarLink>
         <SidebarLink
-          href="/college-details"
-          icon={<Building2 size={20} />}
-          active={isActive("/college-details")}
+          href="/notifications"
+          icon={<Bell size={20} />}
+          active={isActive("/notifications")}
           onClick={onClose}
         >
-          College Details
+          Notifications
         </SidebarLink>
       </nav>
     </>
