@@ -24,8 +24,8 @@ export function CollegeManagement() {
     setSearchTerm(term);
     applyFilters(term, selectedPrograms);
   };
-  const handleView = () => {
-    navigate(`/college-details`);
+  const handleView = (id) => {
+    navigate(`/college-details/${id}`);
   };
 
   const toggleProgram = (program) => {
@@ -195,7 +195,10 @@ export function CollegeManagement() {
                   </button>
                 </td>
                 <td className="font-montserrat py-2 px-6">
-                  <button onClick={() => handleView()} className="underline">
+                  <button
+                    onClick={() => handleView(college.id)}
+                    className="underline"
+                  >
                     View
                   </button>
                 </td>

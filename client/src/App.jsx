@@ -67,7 +67,10 @@ export default function App() {
                 />
                 <Route path="/admin" element={<Admin />} />
                 <Route path="/notifications" element={<Notifications />} />
-                <Route path="/college-details" element={<CollegeDetails />} />
+                <Route
+                  path="/college-details/:id"
+                  element={<CollegeDetails />}
+                />
                 <Route path="*" element={<div>404: Page Not Found</div>} />
               </Routes>
             </div>

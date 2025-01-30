@@ -5,6 +5,10 @@ import { useNavigate } from "react-router-dom";
 export function CollegeTable({ colleges = [], loading }) {
   const navigate = useNavigate();
 
+  const handleView = (id) => {
+    navigate(`/college-details/${id}`);
+  };
+
   if (loading) {
     return (
       <div className="font-montserrat bg-white rounded-lg shadow-sm p-8">
@@ -60,7 +64,7 @@ export function CollegeTable({ colleges = [], loading }) {
               </td>
               <td className="p-4">
                 <button
-                  onClick={() => alert(`Viewing details for ${college.name}`)}
+                  onClick={() => handleView(`${college.id}`)}
                   className="text-blue-600 flex items-center space-x-1 hover:text-blue-700"
                 >
                   <Eye size={16} />
