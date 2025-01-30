@@ -14,15 +14,17 @@ import { api } from "../api/mockData";
 
 export function CollegeDetails() {
   const [searchTerm, setSearchTerm] = useState("");
-  const [college, setCollege] = useState(null);
+  const [college, setCollege] = useState();
   const [loading, setLoading] = useState(true);
-  const [notifications, setNotifications] = useState([]);
+  const [isEditing, setIsEditing] = useState(false);
+  const [editedCollege, setEditedCollege] = useState(college);
 
   useEffect(() => {
     const fetchCollege = async () => {
       try {
         const data = await api.getCollege("CL-0178");
         setCollege(data);
+        setEditedCollege(data);
       } catch (error) {
         console.error("Error fetching college data:", error);
       } finally {
@@ -78,6 +80,34 @@ export function CollegeDetails() {
     }
   };
 
+  const handleEdit = () => {
+    setIsEditing(true);
+  };
+
+  const handleSave = async () => {
+    if (!college || !editedCollege) return;
+    try {
+      await api.updateCollege(college.id, editedCollege);
+      setCollege(editedCollege);
+      setIsEditing(false);
+    } catch (error) {
+      console.error("Error updating college:", error);
+    }
+  };
+
+  const handleCancel = () => {
+    setEditedCollege(college);
+    setIsEditing(false);
+  };
+
+  const filteredAdmins =
+    college?.admins.filter(
+      (admin) =>
+        admin.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        admin.id.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        admin.email.toLowerCase().includes(searchTerm.toLowerCase())
+    ) || [];
+
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -95,29 +125,13 @@ export function CollegeDetails() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <header className="bg-white shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
-          <div className="flex items-center space-x-3">
-            <School2 className="h-8 w-8 text-blue-600" />
-            <h1 className="text-xl font-semibold text-gray-900">
-              College Management
-            </h1>
-          </div>
-          <div className="flex items-center space-x-4">
-            <button className="relative p-2">
-              <Bell className="h-6 w-6 text-gray-500" />
-              <span className="absolute top-0 right-0 block h-2 w-2 rounded-full bg-red-400 ring-2 ring-white" />
-            </button>
-            <button className="text-gray-500 hover:text-gray-700">Clear</button>
-          </div>
-        </div>
-      </header>
-
-      {/* Main Content */}
+    <div className="font-montserrat min-h-screen bg-gray-50">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+        <h1 className="text-3xl font-semibold text-collegeDetailsBlack">
+          College Management
+        </h1>
+      </div>
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Search Bar */}
         <div className="flex space-x-4 mb-8">
           <div className="flex-1 relative">
             <input
@@ -134,45 +148,105 @@ export function CollegeDetails() {
           </button>
         </div>
 
-        {/* University Card */}
+        {/* College Description */}
         <div className="bg-white rounded-lg shadow-sm p-6 mb-8">
           <div className="flex justify-between items-start mb-6">
             <div>
-              <h2 className="text-2xl font-bold text-gray-900 mb-2">
+              <h2 className="text-4xl font-sb text-black mb-2">
                 {college.name}
               </h2>
-              <p className="text-sm text-gray-500">
+              <p className="text-lg font-light text-black">
                 College Code: {college.id}
               </p>
             </div>
-            <button className="px-4 py-2 bg-blue-600 text-white rounded-lg flex items-center space-x-2 hover:bg-blue-700">
+            <button
+              onClick={isEditing ? handleSave : handleEdit}
+              className="px-4 py-2 bg-blue-600 text-white rounded-lg flex items-center space-x-2 hover:bg-blue-700"
+            >
               <Edit className="h-4 w-4" />
-              <span>Edit</span>
+              <span>{isEditing ? "Save" : "Edit"}</span>
             </button>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-            <div>
-              <h3 className="text-sm font-medium text-gray-500 mb-1">
-                LOCATION
-              </h3>
-              <p className="text-base text-gray-900">{college.location}</p>
-            </div>
-            <div>
-              <h3 className="text-sm font-medium text-gray-500 mb-1">
-                CONTACT INFORMATION
-              </h3>
-              <p className="text-base text-gray-900">{college.email}</p>
-            </div>
-          </div>
+          <div className="flex gap-8 mb-8">
+            <img
+              src={college.logo}
+              alt={college.name}
+              className="w-48 h-auto object-cover rounded-lg"
+            />
+            <div className="flex-1">
+              <div className="grid grid-cols-2 gap-6">
+                <div>
+                  <h3 className="text-medium font-base text-currcol mb-1">
+                    LOCATION
+                  </h3>
+                  {isEditing ? (
+                    <input
+                      type="text"
+                      value={editedCollege?.location}
+                      onChange={(e) =>
+                        setEditedCollege((prev) =>
+                          prev ? { ...prev, location: e.target.value } : null
+                        )
+                      }
+                      className="w-full p-2 border rounded"
+                    />
+                  ) : (
+                    <p className="text-xl font-bold text-black">
+                      {college.location}
+                    </p>
+                  )}
+                </div>
+                <div>
+                  <h3 className="text-medium font-base text-currcol mb-1">
+                    CONTACT INFORMATION
+                  </h3>
+                  {isEditing ? (
+                    <input
+                      type="email"
+                      value={editedCollege?.email}
+                      onChange={(e) =>
+                        setEditedCollege((prev) =>
+                          prev ? { ...prev, email: e.target.value } : null
+                        )
+                      }
+                      className="w-full p-2 border rounded"
+                    />
+                  ) : (
+                    <p className="text-xl font-bold text-black">
+                      {college.email}
+                    </p>
+                  )}
+                </div>
+              </div>
 
-          <div className="mb-6">
-            <h3 className="text-sm font-medium text-gray-500 mb-1">
-              NUMBER OF REGISTERED STUDENTS
-            </h3>
-            <p className="text-base text-gray-900">
-              {college.registeredStudents}
-            </p>
+              <div className="mt-6">
+                <h3 className="text-medium font-base text-currcol mb-1">
+                  NUMBER OF REGISTERED STUDENTS
+                </h3>
+                {isEditing ? (
+                  <input
+                    type="number"
+                    value={editedCollege?.registeredStudents}
+                    onChange={(e) =>
+                      setEditedCollege((prev) =>
+                        prev
+                          ? {
+                              ...prev,
+                              registeredStudents: parseInt(e.target.value),
+                            }
+                          : null
+                      )
+                    }
+                    className="w-full p-2 border rounded"
+                  />
+                ) : (
+                  <p className="text-xl font-bold text-black">
+                    {college.registeredStudents}
+                  </p>
+                )}
+              </div>
+            </div>
           </div>
 
           <div className="flex space-x-4">
@@ -202,19 +276,21 @@ export function CollegeDetails() {
 
         {/* Programs Section */}
         <div className="mb-8">
-          <h3 className="text-lg font-medium text-gray-900 mb-4">
+          <h3 className="text-base font-bold text-programsBlack mb-4">
             PROGRAMS ASSIGNED
           </h3>
           <div className="flex flex-wrap gap-2">
             {college.programs.map((program) => (
               <div
                 key={program.code}
-                className="flex items-center bg-blue-100 text-blue-800 px-3 py-1 rounded-full"
+                className="flex items-center bg-blue-50 ext-base font-bold text-programsBlack px-3 py-1 rounded-full border border-blue-200"
               >
-                <span title={program.fullName}>{program.name}</span>
+                <span title={program.fullName} className="font-bold">
+                  {program.name}
+                </span>
                 <button
                   onClick={() => removeProgram(program.code)}
-                  className="ml-2 hover:text-blue-600"
+                  className="ml-2 hover:text-blue-800"
                 >
                   <X className="h-4 w-4" />
                 </button>
@@ -228,43 +304,37 @@ export function CollegeDetails() {
         </div>
 
         {/* Admins Table */}
-        <div className="bg-white rounded-lg shadow-sm overflow-hidden">
-          <table className="min-w-full divide-y divide-gray-200">
-            <thead className="bg-gray-50">
-              <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+        <div className="bg-collegeDetailsTableBackground rounded-lg overflow-hidden">
+          <table className="min-w-full">
+            <thead>
+              <tr className="bg-gray-100">
+                <th className="px-6 py-3 text-left text-xl font-sb text-black tracking-wider">
                   College Admin
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xl font-sb text-black tracking-wider">
                   College ID
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xl font-sb text-black tracking-wider">
                   Mail ID
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Role
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xl font-sb text-black tracking-wider">
                   Date Added
                 </th>
               </tr>
             </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
-              {college.admins.map((admin, index) => (
-                <tr key={index}>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+            <tbody className="bg-white">
+              {filteredAdmins.map((admin, index) => (
+                <tr key={index} className="border-t border-gray-100">
+                  <td className="px-6 py-4 whitespace-nowrap text-lg font-medium text-black">
                     {admin.name}
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                  <td className="px-6 py-4 whitespace-nowrap text-lg font-medium text-black">
                     {admin.id}
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                  <td className="px-6 py-4 whitespace-nowrap text-lg font-sb text-black italic underline">
                     {admin.email}
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                    {admin.role}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                  <td className="px-6 py-4 whitespace-nowrap text-lg font-medium text-black">
                     {admin.dateAdded}
                   </td>
                 </tr>
