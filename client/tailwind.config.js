@@ -21,7 +21,8 @@ export default {
         dropBG: "rgba(70, 95, 241, 0.14)",
         notifColours:"#5E5E5E",
         currcol :"#494949",
-        warningRed : "#9A0000"
+        warningRed : "#9A0000",
+        faintGray: "#737373",
       }
     },
   },
