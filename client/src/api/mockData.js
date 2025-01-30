@@ -79,6 +79,107 @@ export const Program = {
     return mockPrograms;
   }
 };
+export const colleges = [
+  {
+    id: 'CL-0178',
+    name: 'Vishwakarma University',
+    location: 'Pune, MH',
+    email: 'connect@vupune.ac.in',
+    registeredStudents: 15420,
+    logo: 'https://images.unsplash.com/photo-1562774053-701939374585?w=128&h=128&fit=crop',
+    programs: [
+      { name: 'FB', code: 'FB001', fullName: 'Faculty of Business' },
+      { name: 'BPI', code: 'BPI001', fullName: 'Business Process Innovation' },
+      { name: 'IP', code: 'IP001', fullName: 'Industrial Psychology' }
+    ],
+    admins: [
+      { 
+        name: 'Dr. Rajesh Kumar',
+        id: 'APP0123',
+        email: 'rajesh.kumar@vupune.ac.in',
+        dateAdded: '22 Jan 2024',
+        role: 'Principal',
+        status: 'active'
+      },
+      {
+        name: 'Dr. Priya Sharma',
+        id: 'APP0124',
+        email: 'priya.sharma@vupune.ac.in',
+        dateAdded: '15 Jan 2024',
+        role: 'Dean',
+        status: 'active'
+      },
+      {
+        name: 'Prof. Amit Patel',
+        id: 'APP0125',
+        email: 'amit.patel@vupune.ac.in',
+        dateAdded: '10 Jan 2024',
+        role: 'HOD',
+        status: 'active'
+      },
+      {
+        name: 'Dr. Sarah Wilson',
+        id: 'APP0126',
+        email: 'sarah.wilson@vupune.ac.in',
+        dateAdded: '5 Jan 2024',
+        role: 'Dean',
+        status: 'active'
+      }
+    ],
+    documents: {
+      mou: {
+        status: 'pending',
+        lastUpdated: '2024-01-15',
+        expiryDate: '2025-01-15'
+      }
+    }
+  }
+];
+
+export const notifications = [
+  {
+    id: 'notif-001',
+    title: 'MOU Update Required',
+    message: 'The current MOU will expire in 30 days. Please upload a new one.',
+    type: 'warning',
+    date: '2024-01-20',
+    read: false
+  },
+  {
+    id: 'notif-002',
+    title: 'New Admin Added',
+    message: 'Dr. Sarah Wilson has been added as Dean',
+    type: 'info',
+    date: '2024-01-05',
+    read: true
+  },
+  {
+    id: 'notif-003',
+    title: 'Student Registration Update',
+    message: '150 new students registered this week',
+    type: 'success',
+    date: '2024-01-18',
+    read: false
+  }
+];
+
+export const availablePrograms = [
+  { name: 'FB', code: 'FB001', fullName: 'Faculty of Business' },
+  { name: 'BPI', code: 'BPI001', fullName: 'Business Process Innovation' },
+  { name: 'IP', code: 'IP001', fullName: 'Industrial Psychology' },
+  { name: 'CS', code: 'CS001', fullName: 'Computer Science' },
+  { name: 'ME', code: 'ME001', fullName: 'Mechanical Engineering' },
+  { name: 'CE', code: 'CE001', fullName: 'Civil Engineering' },
+  { name: 'EE', code: 'EE001', fullName: 'Electrical Engineering' },
+  { name: 'BT', code: 'BT001', fullName: 'Biotechnology' }
+];
+
+export const roles = [
+  { id: 'PRINCIPAL', name: 'Principal' },
+  { id: 'DEAN', name: 'Dean' },
+  { id: 'HOD', name: 'HOD' },
+  { id: 'COORDINATOR', name: 'Program Coordinator' }
+];
 
 export const api = {
   async fetchColleges(filters = {}) {
@@ -155,5 +256,92 @@ export const api = {
     const college = mockColleges.find(c => c.id === collegeId);
     if (!college) throw new Error('College not found');
     window.open('https://drive.google.com/file/d/11H9I7r1Y5AozZ9Oy7N6qW-_qWLaSVkda/view?usp=drive_link');
+  },
+  async getCollege(id) {
+    await delay(500);
+    return colleges.find(college => college.id === id);
+  },
+
+  async updateCollege(id, data) {
+    await delay(800);
+    const index = colleges.findIndex(college => college.id === id);
+    if (index !== -1) {
+      colleges[index] = { ...colleges[index], ...data };
+      return colleges[index];
+    }
+    throw new Error('College not found');
+  },
+
+  async getNotifications() {
+    await delay(300);
+    return notifications;
+  },
+
+  async markNotificationAsRead(id) {
+    await delay(200);
+    const notification = notifications.find(n => n.id === id);
+    if (notification) {
+      notification.read = true;
+      return notification;
+    }
+    throw new Error('Notification not found');
+  },
+
+  async addProgram(collegeId, program) {
+    await delay(600);
+    const college = colleges.find(c => c.id === collegeId);
+    if (college) {
+      college.programs.push(program);
+      return college.programs;
+    }
+    throw new Error('College not found');
+  },
+
+  async removeProgram(collegeId, programCode) {
+    await delay(400);
+    const college = colleges.find(c => c.id === collegeId);
+    if (college) {
+      college.programs = college.programs.filter(p => p.code !== programCode);
+      return college.programs;
+    }
+    throw new Error('College not found');
+  },
+
+  async uploadMOU(collegeId, file) {
+    await delay(1000);
+    const college = colleges.find(c => c.id === collegeId);
+    if (college) {
+      college.documents.mou = {
+        status: 'active',
+        lastUpdated: new Date().toISOString().split('T')[0],
+        expiryDate: new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toISOString().split('T')[0]
+      };
+      return college.documents.mou;
+    }
+    throw new Error('College not found');
+  },
+
+  async downloadMOU(collegeId) {
+    await delay(500);
+    const college = colleges.find(c => c.id === collegeId);
+    if (college && college.documents.mou) {
+      // In a real application, this would trigger a file download
+      return college.documents.mou;
+    }
+    throw new Error('MOU not found');
+  },
+
+  async sendNotification(collegeId, message) {
+    await delay(300);
+    const notification = {
+      id: `notif-${notifications.length + 1}`,
+      title: 'New Notification',
+      message,
+      type: 'info',
+      date: new Date().toISOString().split('T')[0],
+      read: false
+    };
+    notifications.unshift(notification);
+    return notification;
   }
 };
