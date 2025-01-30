@@ -9,7 +9,7 @@ import { CollegeManagement } from "./pages/CollegeManagement";
 import { Notifications } from "./pages/Notification";
 import { Admin } from "./pages/Admin";
 import Footer from "./components/Footer";
-import { CollegeDetails } from "./pages/CollegeDetails";
+import { CollegeDetails } from "./pages/CollegeDetails.jsx";
 
 export default function App() {
   const [showMobileSidebar, setShowMobileSidebar] = useState(false);
