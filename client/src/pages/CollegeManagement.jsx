@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Search, Filter } from "lucide-react";
 import { mockColleges, updateCollegeStatus } from "../api/mockData";
-import LatestNotification from "../components/LatestNotfication";
+import { useNavigate } from "react-router-dom";
 
 export function CollegeManagement() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -10,6 +10,7 @@ export function CollegeManagement() {
   const [currentPage, setCurrentPage] = useState(1);
   const [showFilters, setShowFilters] = useState(false);
   const [selectedPrograms, setSelectedPrograms] = useState([]);
+  const navigate = useNavigate();
   const itemsPerPage = 3;
 
   const availablePrograms = ["FP", "BPI", "IP"];
@@ -22,6 +23,9 @@ export function CollegeManagement() {
   const handleSearch = (term) => {
     setSearchTerm(term);
     applyFilters(term, selectedPrograms);
+  };
+  const handleView = () => {
+    navigate(`/college-details`);
   };
 
   const toggleProgram = (program) => {
@@ -144,22 +148,27 @@ export function CollegeManagement() {
       <div className="bg-white rounded-lg shadow-sm">
         <table className="w-full">
           <thead>
-            <tr className="font-montserrat text-left">
+            <tr className="font-montserrat text-left text-faintGray text-xs">
               <th className="py-2 px-6 font-medium">College Name</th>
               <th className="py-2 px-6 font-medium">College ID</th>
               <th className="py-2 px-6 font-medium">Status</th>
-              <th className="py-2 px-6 font-medium">Programs Assigned</th>
+              <th className="py-2 px-10 font-medium">Accept/Deny</th>
               <th className="py-2 px-6 font-medium">Actions</th>
+              <th className="py-2 px-6 font-medium">Programs Assigned</th>
             </tr>
           </thead>
           <tbody>
             {currentPageData.map((college) => (
               <tr key={college.id} className="border-t">
-                <td className="font-montserrat py-2 px-6">{college.name}</td>
-                <td className="font-montserrat py-2 px-6">{college.id}</td>
-                <td className="font-montserrat py-2 px-6">
+                <td className="font-montserrat py-2 px-6 text-black text-base font-light">
+                  {college.name}
+                </td>
+                <td className="font-montserrat py-2 px-6 text-black text-base font-light">
+                  {college.id}
+                </td>
+                <td className="font-montserrat font-medium text-sm py-2 px-6">
                   <span
-                    className={`font-montserrat rounded-full ${
+                    className={`rounded-full ${
                       college.status === "Approved"
                         ? "px-3 py-1 bg-myGreen text-white"
                         : college.status === "Rejected"
@@ -170,15 +179,13 @@ export function CollegeManagement() {
                     {college.status}
                   </span>
                 </td>
-                <td className="font-montserrat py-2 px-6">
-                  {college.programs.map(getProgramBadge)}
-                </td>
-                <td className="font-montserrat py-2 px-6">
+
+                <td className="font-montserrat py-2 px-6 font-medium text-sm">
                   <button
                     className="font-montserrat px-3 py-1 bg-myGreen text-white rounded-full text-sm mr-2"
                     onClick={() => handleStatusChange(college.id, "Approved")}
                   >
-                    Approve
+                    Accept
                   </button>
                   <button
                     className="font-montserrat px-4 py-1 bg-myRed text-white rounded-full text-sm"
@@ -186,6 +193,14 @@ export function CollegeManagement() {
                   >
                     Deny
                   </button>
+                </td>
+                <td className="font-montserrat py-2 px-6">
+                  <button onClick={() => handleView()} className="underline">
+                    View
+                  </button>
+                </td>
+                <td className="font-montserrat py-2 px-6">
+                  {college.programs.map(getProgramBadge)}
                 </td>
               </tr>
             ))}
