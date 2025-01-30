@@ -23,6 +23,10 @@ export default {
         currcol :"#494949",
         warningRed : "#9A0000",
         faintGray: "#737373",
+        collegeDetailsBlack:"#262626",
+        collegeDetailsTableBackground: "rgba(112, 132, 154, 0.23)",
+        programsBlack:"#343434"
+
       }
     },
   },
