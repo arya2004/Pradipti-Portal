@@ -13,19 +13,39 @@ export function Admin() {
     {
       userName: "user-1",
       userId: "U12345",
-      actions: "Edit Delete",
+      actions: "Delete Edit",
       access: "Admin",
     },
-    { userName: "user-2", userId: "U67890", actions: "Edit", access: "User" },
-    { userName: "user-3", userId: "U54321", actions: "View", access: "Guest" },
+    {
+      userName: "user-2",
+      userId: "U67890",
+      actions: "Delete Edit",
+      access: "User",
+    },
+    {
+      userName: "user-3",
+      userId: "U54321",
+      actions: "Delete Edit",
+      access: "Guest",
+    },
     {
       userName: "user-4",
       userId: "U98765",
-      actions: "Edit Delete",
+      actions: "Delete Edit",
       access: "Admin",
     },
-    { userName: "user-5", userId: "U11223", actions: "View", access: "User" },
-    { userName: "user-6", userId: "U44556", actions: "Edit", access: "User" },
+    {
+      userName: "user-5",
+      userId: "U11223",
+      actions: "Delete Edit",
+      access: "User",
+    },
+    {
+      userName: "user-6",
+      userId: "U44556",
+      actions: "Delete Edit",
+      access: "User",
+    },
   ];
 
   useEffect(() => {
@@ -105,7 +125,24 @@ export function Admin() {
                         {college.userId}
                       </td>
                       <td className="py-3 px-4 text-sm text-gray-700">
-                        {college.actions}
+                        <div>
+                          <button
+                            onClick={() =>
+                              alert(`Deleting user ${college.userName}`)
+                            }
+                            className="flex items-center space-x-1 hover:text-blue-700"
+                          >
+                            <span>Delete</span>
+                          </button>
+                          <button
+                            onClick={() =>
+                              alert(`Editing user ${college.userName}`)
+                            }
+                            className="flex items-center space-x-1 hover:text-blue-700"
+                          >
+                            <span>Edit</span>
+                          </button>
+                        </div>
                       </td>
                       <td className="py-3 px-4 text-sm text-blue-500">
                         {college.access}
