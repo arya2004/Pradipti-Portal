@@ -1,6 +1,7 @@
 import { db } from './drizzle';
 import { eq } from 'drizzle-orm';
 import { users } from './schema';
+import { UUID } from 'crypto';
 
 export const createUser = async (user: {
   id: number;
@@ -13,7 +14,7 @@ export const createUser = async (user: {
     const result = await db
       .insert(users)
       .values({
-        name: user.name,
+        username: user.name,
         email: user.email,
         salt: user.salt,
         password: user.password,
@@ -27,12 +28,12 @@ export const createUser = async (user: {
   }
 };
 
-export const getUserByUID = async (id: number): Promise<any[]> => {
+export const getUserByUID = async (id: UUID): Promise<any[]> => {
     try {
       const result = await db
         .select()
         .from(users)
-        .where(eq(users.id, id));
+        .where(eq(users.user_id, id));
   
       return result;
     } catch (error) {
