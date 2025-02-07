@@ -1,10 +1,26 @@
 import React from "react";
 
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { notifications as mockNotifications } from "../api/mockData.js";
 
 export default function LatestNotification({ onClose }) {
   const location = useLocation();
+  const navigate = useNavigate();
+  const [notifications, setNotifications] = useState([]);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setNotifications(mockNotifications);
+    }, 500);
+  }, []);
   const isActive = (path) => location.pathname === path;
+  const handleView = () => {
+    navigate(`/notifications`);
+  };
+  const handleClear = () => {
+    setNotifications([]);
+  };
   return (
     <>
       <div className="font-montserrat w-full lg:w-1/4 bg-white border-l border-gray-200 p-4">
@@ -27,31 +43,41 @@ export default function LatestNotification({ onClose }) {
               Notifications
             </h2>
           </div>
-          <button className="font-montserrat text-#6E6E6E hover:text-gray-800 transition-colors duration-200 font-semibold">
+          <button
+            onClick={handleClear}
+            className="font-montserrat text-#6E6E6E hover:text-gray-800 transition-colors duration-200 font-semibold"
+          >
             Clear
           </button>
         </div>
 
         <div className="font-montserrat space-y-4 max-h-[calc(100vh-12rem)] overflow-y-auto">
-          {[1, 2, 3, 4, 5, 6].map((_, index) => (
-            <div
-              key={index}
-              className="flex items-start gap-3 p-3 bg-myGray rounded-lg hover:bg-gray-100 transition-colors duration-200"
-            >
-              <div className="w-8 h-8 bg-gray-200 rounded-full flex-shrink-0"></div>
-              <div className="flex-grow">
-                <p className="font-montserrat text-sm text-gray-900 font-medium">
-                  New Message from XYZ1234
-                </p>
-                <p className="font-montserrat text-xs text-gray-500 mt-1">
-                  1 sec ago
-                </p>
+          {notifications.length > 0 ? (
+            notifications.map((notification) => (
+              <div
+                key={notification.id}
+                className="flex items-start gap-3 p-3 bg-myGray rounded-lg hover:bg-gray-100 transition-colors duration-200"
+              >
+                <div className="w-8 h-8 bg-gray-200 rounded-full flex-shrink-0"></div>
+                <div className="flex-grow">
+                  <p className="font-montserrat text-sm text-gray-900 font-medium">
+                    {notification.message}
+                  </p>
+                  <p className="font-montserrat text-xs text-gray-500 mt-1">
+                    {notification.time}
+                  </p>
+                </div>
               </div>
-            </div>
-          ))}
+            ))
+          ) : (
+            <p className="text-center text-gray-500">No new notifications</p>
+          )}
         </div>
 
-        <button className="font-montserrat w-full mt-4 py-2 text-center text-gray-600 hover:text-gray-800 transition-colors duration-200 font-medium">
+        <button
+          onClick={() => handleView()}
+          className="font-montserrat w-full mt-4 py-2 text-center text-gray-600 hover:text-gray-800 transition-colors duration-200 font-medium border-2 border-borderColours border-solid rounded-xl"
+        >
           View all
         </button>
       </div>
