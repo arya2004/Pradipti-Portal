@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   Bell,
   Search,
@@ -9,8 +9,284 @@ import {
   School2,
   Download,
   Edit,
+  Bold,
+  Italic,
+  Smile,
+  Image,
+  List,
 } from "lucide-react";
 import { api } from "../api/mockData";
+
+const NotificationModal = ({ isOpen, onClose, onSend }) => {
+  const [subject, setSubject] = useState("");
+  const [description, setDescription] = useState("");
+  const [isMinimized, setIsMinimized] = useState(false);
+  const [isMaximized, setIsMaximized] = useState(false);
+  const [isBold, setIsBold] = useState(false);
+  const [isItalic, setIsItalic] = useState(false);
+  const [showEmojiPicker, setShowEmojiPicker] = useState(false);
+  const [showImageInput, setShowImageInput] = useState(false);
+  const [imageUrl, setImageUrl] = useState("");
+  const textareaRef = useRef(null);
+
+  const emojis = ["😀", "😊", "👍", "❤️", "🎉", "✨", "🌟", "💡", "📝", "✅"];
+
+  if (!isOpen) return null;
+
+  const handleMinimize = () => {
+    setIsMinimized(!isMinimized);
+    setIsMaximized(false);
+  };
+
+  const handleMaximize = () => {
+    setIsMaximized(!isMaximized);
+    setIsMinimized(false);
+  };
+
+  const modalClasses = `
+    fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50
+    ${isMinimized ? "items-end" : ""}
+  `;
+
+  const contentClasses = `
+    bg-notificationPopBg rounded-lg overflow-hidden transition-all duration-200 
+    ${isMaximized ? "w-full h-full rounded-xl" : "w-[600px] rounded-xl"}
+    ${isMinimized ? "w-[300px] h-auto mb-4 mx-4 rounded-xl" : "rounded-xl"}
+  `;
+
+  const wrapSelectedText = (prefix, suffix = prefix) => {
+    const textarea = textareaRef.current;
+    if (!textarea) return;
+
+    const start = textarea.selectionStart;
+    const end = textarea.selectionEnd;
+    const selectedText = description.substring(start, end);
+    const beforeText = description.substring(0, start);
+    const afterText = description.substring(end);
+
+    const newText = `${beforeText}${prefix}${selectedText}${suffix}${afterText}`;
+    setDescription(newText);
+
+    // Restore cursor position
+    setTimeout(() => {
+      textarea.focus();
+      textarea.setSelectionRange(start + prefix.length, end + prefix.length);
+    }, 0);
+  };
+
+  const handleBoldClick = () => {
+    setIsBold(!isBold);
+    wrapSelectedText("**");
+  };
+
+  const handleItalicClick = () => {
+    setIsItalic(!isItalic);
+    wrapSelectedText("_");
+  };
+
+  const handleEmojiClick = (emoji) => {
+    const textarea = textareaRef.current;
+    if (!textarea) return;
+
+    const cursorPos = textarea.selectionStart;
+    const textBefore = description.substring(0, cursorPos);
+    const textAfter = description.substring(cursorPos);
+
+    setDescription(`${textBefore}${emoji}${textAfter}`);
+    setShowEmojiPicker(false);
+
+    // Move cursor after emoji
+    setTimeout(() => {
+      textarea.focus();
+      const newPosition = cursorPos + emoji.length;
+      textarea.setSelectionRange(newPosition, newPosition);
+    }, 0);
+  };
+
+  const handleImageInsert = () => {
+    if (imageUrl) {
+      const imageMarkdown = `![image](${imageUrl})`;
+      const textarea = textareaRef.current;
+      const cursorPos = textarea.selectionStart;
+      const textBefore = description.substring(0, cursorPos);
+      const textAfter = description.substring(cursorPos);
+
+      setDescription(`${textBefore}${imageMarkdown}${textAfter}`);
+      setImageUrl("");
+      setShowImageInput(false);
+    }
+  };
+
+  const handleListClick = () => {
+    const textarea = textareaRef.current;
+    if (!textarea) return;
+
+    const start = textarea.selectionStart;
+    const selectedText = description.substring(
+      textarea.selectionStart,
+      textarea.selectionEnd
+    );
+
+    let newText;
+    if (selectedText.includes("\n")) {
+      // Multi-line selection
+      newText = selectedText
+        .split("\n")
+        .map((line) => (line.trim() ? `- ${line}` : line))
+        .join("\n");
+    } else {
+      // Single line
+      newText = `- ${selectedText}`;
+    }
+
+    const beforeText = description.substring(0, start);
+    const afterText = description.substring(textarea.selectionEnd);
+    setDescription(`${beforeText}${newText}${afterText}`);
+  };
+
+  return (
+    <div className={modalClasses}>
+      <div className={contentClasses}>
+        <div className="flex items-center justify-between bg-[#4361ee] p-4 text-white rounded-xl">
+          <h2 className="text-2xl font-semibold font-Montserrat">
+            New Message
+          </h2>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={handleMinimize}
+              className="hover:bg-blue-600 p-1 rounded"
+            >
+              <span className="text-2xl">−</span>
+            </button>
+            <button
+              onClick={handleMaximize}
+              className="hover:bg-blue-600 p-1 rounded text-xl"
+            >
+              □
+            </button>
+            <button onClick={onClose} className="hover:bg-blue-600 p-1 rounded">
+              <X className="h-5 w-5" />
+            </button>
+          </div>
+        </div>
+
+        {!isMinimized && (
+          <>
+            <div className="p-6">
+              <input
+                type="text"
+                placeholder="Subject"
+                value={subject}
+                onChange={(e) => setSubject(e.target.value)}
+                className="text-popTextCol w-full p-3 mb-4 border border-gray-200 rounded-lg focus:outline-none focus:border-blue-500"
+              />
+
+              <textarea
+                ref={textareaRef}
+                placeholder="Description"
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+                className={`text-popTextCol w-full p-3 mb-4 border border-gray-200 rounded-lg resize-none focus:outline-none focus:border-blue-500 ${
+                  isMaximized ? "h-[calc(100vh-300px)]" : "h-32"
+                }`}
+              />
+
+              {showEmojiPicker && (
+                <div className="absolute bg-white border border-gray-200 rounded-lg p-2 shadow-lg">
+                  <div className="grid grid-cols-5 gap-2">
+                    {emojis.map((emoji, index) => (
+                      <button
+                        key={index}
+                        onClick={() => handleEmojiClick(emoji)}
+                        className="hover:bg-gray-100 p-2 rounded"
+                      >
+                        {emoji}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {showImageInput && (
+                <div className="mb-4 flex gap-2">
+                  <input
+                    type="text"
+                    placeholder="Enter image URL"
+                    value={imageUrl}
+                    onChange={(e) => setImageUrl(e.target.value)}
+                    className="flex-1 p-2 border border-gray-200 rounded-lg focus:outline-none focus:border-blue-500"
+                  />
+                  <button
+                    onClick={handleImageInsert}
+                    className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+                  >
+                    Insert
+                  </button>
+                </div>
+              )}
+            </div>
+
+            <div className="bg-myBlue border-t border-gray-200 p-4 flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <button
+                  onClick={handleBoldClick}
+                  className={`p-2  rounded ${isBold ? "" : ""}`}
+                >
+                  <Bold className="h-5 w-5 text-white hover:text-black" />
+                </button>
+                <button
+                  onClick={handleItalicClick}
+                  className={`p-2  rounded ${
+                    isItalic ? "bg-notificationPopBg" : ""
+                  }`}
+                >
+                  <Italic className="h-5 w-5 text-white hover:text-black" />
+                </button>
+                <button
+                  onClick={() => setShowEmojiPicker(!showEmojiPicker)}
+                  className="p-2  rounded"
+                >
+                  <Smile className="h-5 w-5 text-white hover:text-black" />
+                </button>
+                <button
+                  onClick={() => setShowImageInput(!showImageInput)}
+                  className="p-2 rounded"
+                >
+                  <Image className="h-5 w-5 text-white hover:text-black" />
+                </button>
+                <button onClick={handleListClick} className="p-2 rounded">
+                  <List className="h-5 w-5 text-white hover:text-black" />
+                </button>
+              </div>
+
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={() => {
+                    onSend(subject, description);
+                    setSubject("");
+                    setDescription("");
+                  }}
+                  className="px-4 py-2 bg-[#4361ee] text-white rounded hover:bg-blue-600"
+                >
+                  Send
+                </button>
+                <button className="px-4 py-2 bg-gray-100 text-gray-700 rounded hover:bg-gray-200">
+                  Save
+                </button>
+                <button
+                  onClick={onClose}
+                  className="px-4 py-2 bg-gray-100 text-gray-700 rounded hover:bg-gray-200"
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          </>
+        )}
+      </div>
+    </div>
+  );
+};
 
 export function CollegeDetails() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -18,6 +294,7 @@ export function CollegeDetails() {
   const [loading, setLoading] = useState(true);
   const [isEditing, setIsEditing] = useState(false);
   const [editedCollege, setEditedCollege] = useState(college);
+  const [isNotificationModalOpen, setIsNotificationModalOpen] = useState(false);
 
   useEffect(() => {
     const fetchCollege = async () => {
@@ -67,14 +344,12 @@ export function CollegeDetails() {
     }
   };
 
-  const handleSendNotification = async () => {
+  const handleSendNotification = async (subject, description) => {
     if (!college) return;
     try {
-      const message = prompt("Enter notification message:");
-      if (message) {
-        await api.sendNotification(college.id, message);
-        alert("Notification sent successfully");
-      }
+      await api.sendNotification(college.id, `${subject}\n\n${description}`);
+      setIsNotificationModalOpen(false);
+      alert("Notification sent successfully");
     } catch (error) {
       console.error("Error sending notification:", error);
     }
@@ -265,7 +540,7 @@ export function CollegeDetails() {
               <span>Download MOU</span>
             </button>
             <button
-              onClick={handleSendNotification}
+              onClick={() => setIsNotificationModalOpen(true)}
               className="px-4 py-2 bg-blue-600 text-white rounded-lg flex items-center space-x-2 hover:bg-blue-700"
             >
               <Send className="h-4 w-4" />
@@ -342,7 +617,15 @@ export function CollegeDetails() {
             </tbody>
           </table>
         </div>
+
+        <NotificationModal
+          isOpen={isNotificationModalOpen}
+          onClose={() => setIsNotificationModalOpen(false)}
+          onSend={handleSendNotification}
+        />
       </main>
     </div>
   );
 }
+
+export default CollegeDetails;
