@@ -1,3 +1,5 @@
+import { notifications } from './src/api/mockData';
+
 /** @type {import('tailwindcss').Config} */
 export default {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
@@ -26,7 +28,9 @@ export default {
         collegeDetailsBlack:"#262626",
         collegeDetailsTableBackground: "rgba(112, 132, 154, 0.23)",
         programsBlack:"#343434",
-        borderColours: "#8C8C8C"
+        borderColours: "#8C8C8C",
+        notificationPopBg : "#EAEDFF",
+        popTextCol:"#01116E",
 
       }
     },
