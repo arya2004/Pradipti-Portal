@@ -25,7 +25,8 @@ export default {
         faintGray: "#737373",
         collegeDetailsBlack:"#262626",
         collegeDetailsTableBackground: "rgba(112, 132, 154, 0.23)",
-        programsBlack:"#343434"
+        programsBlack:"#343434",
+        borderColours: "#8C8C8C"
 
       }
     },
