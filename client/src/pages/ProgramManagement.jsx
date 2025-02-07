@@ -211,14 +211,24 @@ export function ProgramManagement() {
           </button>
         </div>
         <div className="font-montserrat content flex py-2">
-          <img className="w-100 h-80 mb-4" src="/image2.png"></img>
-          <p className="font-montserrat ms-5 me-7 text-xl">
-            Gain hands-on experience in air traffic management by working on
-            real-world projects that enhance operational efficiency, safety, and
-            communication systems in aviation. This internship offers exposure
-            to industry tools, data analysis, and decision-making processes
-            critical to air traffic operations.
-          </p>
+          <img className="w-100 h-80 mb-4" src={program.img}></img>
+          {editMode ? (
+            <input
+              type="text-area"
+              value={editedProgram.description}
+              onChange={(e) =>
+                setEditedProgram({
+                  ...editedProgram,
+                  description: e.target.value,
+                })
+              }
+              className="border rounded px-2 py-1 w-full"
+            />
+          ) : (
+            <p className="font-montserrat ms-5 me-7 text-xl">
+              {program.description}
+            </p>
+          )}
         </div>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 mb-6">
           <div>

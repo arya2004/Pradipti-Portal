@@ -19,7 +19,9 @@ export const mockProgramDetails = {
   startDate: '10th Dec\' 24',
   duration: '4 Months',
   location: 'Pune',
-  applyBy: '8 Nov\' 24'
+  applyBy: '8 Nov\' 24',
+  img:'/image2.png',
+  description: "Gain hands-on experience in air traffic management by working on real-world projects that enhance operational efficiency, safety, and communication systems in aviation. This internship offers exposure to industry tools, data analysis, and decision-making processes critical to air traffic operations.",
 };
 
 export const mockStudents = [
