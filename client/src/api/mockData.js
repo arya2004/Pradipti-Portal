@@ -182,6 +182,23 @@ export const roles = [
 ];
 
 export const api = {
+
+  async fetchCurrentUser() {
+    await delay(500);
+    return mockUser;
+  },
+
+  async fetchNotifications() {
+    return fetchNotifications();
+  },
+
+  async addNotification(title, message, category, priority) {
+    return addNotification(title, message, category, priority);
+  },
+
+  async markNotificationAsRead(notificationId) {
+    return markNotificationAsRead(notificationId);
+  },
   async fetchColleges(filters = {}) {
     await delay(1000);
     let filteredColleges = [...mockColleges];
@@ -345,3 +362,55 @@ export const api = {
     return notification;
   }
 };
+export const fetchNotifications = async () => {
+  await delay(500);
+  return mockNotifications;
+};
+
+export const addNotification = (title, message, category = 'General', priority = 'Medium') => {
+  const newNotification = {
+    id: `notif-${mockNotifications.length + 1}`,
+    title,
+    from: 'System',
+    message,
+    date: new Date().toISOString().split('T')[0], 
+    time: new Date().toLocaleTimeString(), 
+    category,
+    priority,
+    read: false
+  };
+
+  mockNotifications.unshift(newNotification); 
+  return newNotification;
+};
+
+export const markNotificationAsRead = async (notificationId) => {
+  await delay(300);
+  const notification = mockNotifications.find(n => n.id === notificationId);
+  if (notification) {
+    notification.read = true;
+    return notification;
+  }
+  throw new Error('Notification not found');
+};
+
+const generateRandomNotification = () => {
+  const titles = ['New Application', 'System Alert', 'Security Update', 'New Message', 'Announcement'];
+  const messages = [
+    'A new application has been submitted.',
+    'The system will undergo maintenance tonight.',
+    'Your account password expires in 7 days.',
+    'You have received a new message.',
+    'An important announcement has been posted.'
+  ];
+  const categories = ['Application', 'System Alert', 'Security', 'Message', 'Announcement'];
+  const priorities = ['Low', 'Medium', 'High', 'Critical'];
+
+  const randomIndex = Math.floor(Math.random() * titles.length);
+  
+  return addNotification(titles[randomIndex], messages[randomIndex], categories[randomIndex], priorities[randomIndex]);
+};
+
+setInterval(() => {
+  generateRandomNotification();
+}, 30000); 
