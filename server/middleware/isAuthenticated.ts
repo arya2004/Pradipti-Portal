@@ -1,6 +1,6 @@
 import express from 'express';
 import { SESSION_TOKEN } from '../constants';
-import { getUserBySessionToken } from '../db/userOperations';
+import { getUserBySessionToken } from '../services/user.service';
 
 export const isAuthenticated = async (
     req: express.Request,
@@ -15,7 +15,7 @@ export const isAuthenticated = async (
         }
         const result = await getUserBySessionToken(sessionToken);
 
-        if(!result || result.length === 0){
+        if(result == null){
             res.sendStatus(403);
             return;
         }

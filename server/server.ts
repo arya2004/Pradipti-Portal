@@ -1,6 +1,6 @@
 import dotenv from 'dotenv';
 import app from './app';
-import { migrate } from 'drizzle-orm/node-postgres/migrator';
+import { migrate } from 'drizzle-orm/mysql2/migrator'; 
 import { db } from './db/drizzle';
 
 dotenv.config();

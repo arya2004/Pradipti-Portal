@@ -41,6 +41,16 @@ export const getUserById = async (userId: number) => {
   return user || null;
 };
 
+export const getUserByName = async (username: string) => {
+  const [user] = await db
+    .select()
+    .from(users)
+    .where(eq(users.name, username))  // Filter by name (username)
+    .execute();
+
+  return user || null; // Return user or null if not found
+};
+
 // ✅ Update User
 export const updateUser = async (
   userId: number,
@@ -62,6 +72,16 @@ export const updateUser = async (
     .execute();
 
   return result.affectedRows;
+};
+
+export const getUserBySessionToken = async (sessiontoken: string) => {
+  const [user] = await db
+    .select()
+    .from(users)
+    .where(eq(users.sessiontoken, sessiontoken))  // Filter by sessiontoken
+    .execute();
+
+  return user || null; // Return user or null if not found
 };
 
 // ✅ Delete User
