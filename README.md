@@ -18,8 +18,8 @@ This project is a frontend application built using **React**, **Vite**, and **Ta
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/OmkarLolage21/Pradipti-Frontend.git
-cd Pradipti-Frontend
+git clone https://github.com/OmkarLolage21/Pradipti-Superadmin.git
+cd Pradipti-Superadmin
 cd client
 ```
 
