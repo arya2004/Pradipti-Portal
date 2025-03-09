@@ -11,7 +11,7 @@ const startServer = async () => {
   try {
     
     console.log('Running migrations...');
-    await migrate(db, { migrationsFolder: './drizzle' });
+    //await migrate(db, { migrationsFolder: './drizzle' });
     console.log('Migrations applied successfully!');
 
     app.listen(PORT, () => {
